@@ -11,7 +11,7 @@ use SclNominetEpp\Response\Update\Unrenew\Unrenew as UnrenewResponse;
  */
 
 /**
- *
+ * This class builds the XML for a Nominet EPP u:unrenew command.
  *
  * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
  */
