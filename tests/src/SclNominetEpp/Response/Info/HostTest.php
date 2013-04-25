@@ -77,6 +77,7 @@ EOX;
 
         $host = $this->response->getHost();
 
+
         $this->assertEquals($expected, $host);
 
     }
