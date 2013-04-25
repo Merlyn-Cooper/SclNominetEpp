@@ -1,6 +1,15 @@
 <?php
 
 use \SclNominetEpp\Address;
+use \SclNominetEpp\Domain;
+use \SclNominetEpp\Contact;
+use \SclNominetEpp\Nameserver;
+
+use \SclContact\Country;
+use \SclContact\Postcode;
+use \SclContact\Email;
+use \SclContact\PersonName;
+use \SclContact\PhoneNumber;
 
 include __DIR__ . '/../vendor/autoload.php';
 
@@ -32,37 +41,37 @@ $argv = array_values($argv);
 
 switch (strtolower($command)) {
     case 'createcontact':
-        $contact = new \SclNominetEpp\Contact();
+        $contact = new Contact();
         $contact->setId($argv[0]);
-        $contact->setName('name');
-        $contact->setEmail('example@email.com');
+        $contact->setName(new PersonName('name'));
+        $contact->setEmail(new Email('example@email.com'));
         $address = new Address();
         $address->setLine1('Bryn Seion Chapel');
         $address->setCity('Cardigan');
-        $address->setCountry('US');
+        $address->setCountry(new Country('US'));
         $address->setCounty('Ceredigion');
-        $address->setPostCode('SA43 2HB');
+        $address->setPostCode(new Postcode('SA43 2HB'));
         $contact->setAddress($address);
         $contact->setCompanyNumber('NI65786');
-        $contact->setPhone('+44.3344555666');
+        $contact->setPhone(new PhoneNumber('+44.3344555666'));
         $contact->setCompany('sclMerlyn');
-        $contact->setFax('+443344555616');
+        $contact->setFax(new PhoneNumber('+443344555616'));
         $contact->setOptOut('y');
         $argv[0] = $contact;
         break;
     case 'createdomain':
-        $domain = new \SclNominetEpp\Domain();
+        $domain = new Domain();
         $domain->setName($argv[0]);
         $domain->setPeriod(2);
-        $nameserver = new \SclNominetEpp\Nameserver();
+        $nameserver = new Nameserver();
         $nameserver->setHostName('ns1.caliban-scl.sch.uk.');
         $domain->addNameserver($nameserver);
         $domain->setRegistrant('sc2343');
-        $techy = new \SclNominetEpp\Contact();
+        $techy = new Contact();
         $techy->setId('tech1');
         $techy->setType('tech');
         $domain->addContact($techy);
-        $admin = new \SclNominetEpp\Contact();
+        $admin = new Contact();
         $admin->setId('admin1');
         $admin->settype('admin');
         //$domain->addPassword('qwerty');
@@ -70,33 +79,33 @@ switch (strtolower($command)) {
         $argv[0] = $domain;
         break;
     case 'createhost':
-        $host = new \SclNominetEpp\Nameserver();
+        $host = new Nameserver();
         $host->setHostName('ns1.example.com.');
         $host->setIpv4('192.0.2.2');
         $host->setIpv6('1080:0:0:0:8:800:200C:417A');
         $argv[0] = $host;
         break;
     case 'updatedomain':
-        $domain = new \SclNominetEpp\Domain();
+        $domain = new Domain();
         $domain->setName($argv[0]);
         $domain->setPeriod(2);
-        $nameserver = new \SclNominetEpp\Nameserver();
+        $nameserver = new Nameserver();
         $nameserver->setHostName('ns1.example.com.');
         $domain->addNameserver($nameserver);
-        $nameserver2 = new \SclNominetEpp\Nameserver();
+        $nameserver2 = new Nameserver();
         $nameserver2->setHostName('ns3.example.com.');
         $domain->addNameserver($nameserver2);
 
         $domain->setRegistrant('sc2343');
-        $techy = new \SclNominetEpp\Contact();
+        $techy = new Contact();
         $techy->setId('tech1');
         $techy->setType('tech');
         $domain->addContact($techy);
-        $admin = new \SclNominetEpp\Contact();
+        $admin = new Contact();
         $admin->setId('admin1');
         $admin->settype('admin');
         $domain->addContact($admin);
-        $admin2 = new \SclNominetEpp\Contact();
+        $admin2 = new Contact();
         $admin2->setId('admin2');
         $admin2->setType('admin');
         $domain->addContact($admin2);
