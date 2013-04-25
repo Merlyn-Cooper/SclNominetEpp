@@ -49,7 +49,7 @@ class Response implements ResponseInterface
     const ERROR_OBJECT_EXISTS                       = 2302;
     const ERROR_OBJECT_DOES_NOT_EXIST               = 2303;
     const ERROR_OBJECT_STATUS_PROHIBITS_OPERATION   = 2304;
-    const ERROR_PARAMETER_VALUE_POLICY              = 2305;
+    const ERROR_PARAMETER_VALUE_POLICY              = 2306;
     const ERROR_UNIMPLEMENTED_OBJECT_SERVICE        = 2307;
     const ERROR_DATA_MANAGEMENT_POLICY_VIOLATION    = 2308;
         //X4ZZ
