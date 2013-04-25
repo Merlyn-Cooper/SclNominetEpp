@@ -15,6 +15,7 @@ use SclNominetEpp\Request;
 use SclNominetEpp\Request\Update;
 use SclNominetEpp\Response;
 use SclNominetEpp\Response\ListDomains;
+use SimpleXMLElement;
 
 /**
  * This class exposes all the actions of the Nominet EPP system in a nice PHP
@@ -30,18 +31,18 @@ class Nominet extends AbstractRequestResponse
      * A server MAY alter or override status values set by a client, subject to local server policies.
      * Status values that can be added or removed by a client are prefixed with "client".
      */
-    const STATUS_CLIENT_DELETE_PROHIBITED   = 'clientDeleteProhibited';
-    const STATUS_CLIENT_HOLD                = 'clientHold';
-    const STATUS_CLIENT_RENEW               = 'clientRenewProhibited';
+    const STATUS_CLIENT_DELETE_PROHIBITED      = 'clientDeleteProhibited';
+    const STATUS_CLIENT_HOLD                                 = 'clientHold';
+    const STATUS_CLIENT_RENEW                              = 'clientRenewProhibited';
     const STATUS_CLIENT_TRANSFER_PROHIBITED = 'clientTransferProhibited';
-    const STATUS_CLIENT_UPDATE_PROHIBITED   = 'clientUpdateProhibited';
+    const STATUS_CLIENT_UPDATE_PROHIBITED     = 'clientUpdateProhibited';
 
     // Corresponding status values that can be added or removed by a server are prefixed with "server".
-    const STATUS_SERVER_DELETE_PROHIBITED   = 'serverDeleteProhibited';
-    const STATUS_SERVER_HOLD                = 'serverHold';
-    const STATUS_SERVER_RENEW               = 'serverRenewProhibited';
+    const STATUS_SERVER_DELETE_PROHIBITED      = 'serverDeleteProhibited';
+    const STATUS_SERVER_HOLD                                 = 'serverHold';
+    const STATUS_SERVER_RENEW                              = 'serverRenewProhibited';
     const STATUS_SERVER_TRANSFER_PROHIBITED = 'serverTransferProhibited';
-    const STATUS_SERVER_UPDATE_PROHIBITED   = 'serverUpdateProhibited';
+    const STATUS_SERVER_UPDATE_PROHIBITED     = 'serverUpdateProhibited';
 
     /*
      * pending[action]" status MUST NOT be combined
