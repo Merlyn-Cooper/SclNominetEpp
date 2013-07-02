@@ -8,7 +8,7 @@ namespace SclNominetEpp;
  */
 class Address extends \SclContact\Address
 {
-
+    protected $type;
 
     public function setLines(array $lines)
     {

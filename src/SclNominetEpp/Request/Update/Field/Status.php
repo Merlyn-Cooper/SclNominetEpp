@@ -1,6 +1,8 @@
 <?php
 namespace SclNominetEpp\Request\Update\Field;
 
+use SimpleXMLElement;
+
 /**
  * UpdateDomain "add" and "remove" both use "status" as a field
  *
@@ -17,7 +19,13 @@ class Status implements UpdateFieldInterface
         $this->status  = $status;
     }
 
-    public function fieldXml(\SimpleXMLElement $xml, $namespace)
+    /**
+     * function fieldXml allows dynamic child and attribute association with a SimpleXMLElement.
+     * @param SimpleXMLElement $xml
+     * @param type $namespace
+     * 
+     */
+    public function fieldXml(SimpleXMLElement $xml, $namespace)
     {
         $status = $xml->addChild('status', $this->message, $namespace);
         $status->addAttribute('s', $this->status);

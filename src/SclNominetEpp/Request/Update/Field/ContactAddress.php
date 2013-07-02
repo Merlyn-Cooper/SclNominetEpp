@@ -2,7 +2,8 @@
 namespace SclNominetEpp\Request\Update\Field;
 
 /**
- * UpdateDomain "add" and "remove" both use "status" as a field
+ * UpdateContact "chg" uses "postalInfo" as a field with "type" as an attribute 
+ * (either "loc" or "int").
  *
  * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
  */
@@ -12,18 +13,15 @@ class ContactAddress implements UpdateFieldInterface
      *
      * @var type
      */
-    private $contact;
     private $type;
 
     /**
      *
-     * @param type $contact
      * @param type $type
      */
-    public function __construct($contact, $type)
+    public function __construct($type)
     {
-        $this->contact = $contact;
-        $this->type  = $type;
+        $this->type     = $type;
     }
 
     /**

@@ -25,6 +25,7 @@ class Contact extends AbstractUpdate
 
     private $add = array();
     private $remove = array();
+    private $addressType = "loc";
 
     public function __construct(ContactObject $contact)
     {
@@ -79,8 +80,7 @@ class Contact extends AbstractUpdate
          * updateNS
          * extensionNS
          * parent::updateXSI
-         * parent::extensionXSI
-         * 
+         * parent::extensionXSI 
          * 
          */
         
@@ -98,7 +98,7 @@ class Contact extends AbstractUpdate
 
         $change = $update->addChild('chg');
             $postalInfo = $change->addChild('postalInfo');
-            $postalInfo->addAttribute('type', $type);
+            $postalInfo->addAttribute('type', $this->addressType);
                 $postalInfo->addChild('name');
                 $addr = $postalInfo->addChild('addr');
                     $addr->addChild('street');
@@ -107,8 +107,8 @@ class Contact extends AbstractUpdate
                     $addr->addChild('pc');
                     $addr->addChild('cc');
         $extensionXML = $this->xml->command->addChild('extension');
-        $extension = $extensionXML->addChild('contact-nom-ext:update', '', $extensionNS);
-        $extension->addAttribute('xsi:schemaLocation', $extensionXSI);
+        $extension = $extensionXML->addChild("{" . parent::type . "}-nom-ext:update", '', $extensionNS);
+        $extension->addAttribute('xsi:schemaLocation', parent::extensionXSI);
 
         $extension->addChild('trad-name');
         $extension->addChild('type');
@@ -140,5 +140,10 @@ class Contact extends AbstractUpdate
             throw new Exception($exception);
         }
         return true;
+    }
+    
+    public function setAddressType( $type)
+    {
+        $this->addressType = $type;
     }
 }
