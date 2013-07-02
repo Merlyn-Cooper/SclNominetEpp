@@ -3,7 +3,7 @@
 namespace SclNominetEpp\Request\Update;
 
 use SclNominetEpp\Response\Update\Host as UpdateHostResponse;
-use SclNominetEpp\Request;
+use SclNominetEpp\Nameserver;
 use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
 
 /**
@@ -11,7 +11,7 @@ use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
  *
  * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
  */
-class Host extends Request
+class Host extends AbstractUpdate
 {
     const TYPE = 'host'; //For possible Abstracting later
     const UPDATE_NAMESPACE = 'urn:ietf:params:xml:ns:host-1.0';
@@ -24,10 +24,15 @@ class Host extends Request
     private $add = array();
     private $remove = array();
 
-    public function __construct($value)
+    public function __construct(  Nameserver $host)
     {
-        parent::__construct('update', new UpdateHostResponse());
-        $this->value = $value;
+        parent::__construct(
+                self::TYPE, 
+                new UpdateHostResponse(), 
+                self::UPDATE_NAMESPACE, 
+                self::VALUE_NAME
+                );
+        $this->host = $host;
     }
 
     /**
@@ -78,8 +83,27 @@ class Host extends Request
 
     }
 
-    public function setContact($host)
+    public function setHost($host)
     {
         $this->host = $host;
+    }
+    
+    public function getName()
+    {
+        return $this->host->getHostName();
+    }
+    
+    /**
+     * An Exception is thrown if the object is not of type \SclNominetEpp\Nameserver
+     *
+     * @throws Exception
+     */
+    protected function objectValidate( $host )
+    {
+        if (!$host instanceof Nameserver) {
+            $exception = sprintf('A valid contact object was not passed to UpdateHost, Ln:%d', __LINE__);
+            throw new Exception($exception);
+        }
+        return true;
     }
 }

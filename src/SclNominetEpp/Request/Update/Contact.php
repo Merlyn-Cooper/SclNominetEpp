@@ -3,7 +3,8 @@
 namespace SclNominetEpp\Request\Update;
 
 use SclNominetEpp\Response\Update\Contact as UpdateContactResponse;
-use SclNominetEpp\Request;
+use SclNominetEpp\Contact as ContactObject;
+use SclNominetEpp\Request\Update\AbstractUpdate;
 use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
 
 /**
@@ -11,7 +12,7 @@ use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
  *
  * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
  */
-class Contact extends Request
+class Contact extends AbstractUpdate
 {
     const TYPE = 'contact'; //For possible Abstracting later
     const UPDATE_NAMESPACE = 'urn:ietf:params:xml:ns:contact-1.0';
@@ -25,9 +26,15 @@ class Contact extends Request
     private $add = array();
     private $remove = array();
 
-    public function __construct(Contact $contact)
+    public function __construct(ContactObject $contact)
     {
-        parent::__construct('update', new UpdateContactResponse());
+        parent::__construct(
+                self::TYPE, 
+                new UpdateContactResponse(), 
+                self::UPDATE_NAMESPACE, 
+                self::VALUE_NAME, 
+                self::UPDATE_EXTENSION_NAMESPACE
+                );
         $this->contact = $contact;
     }
 
@@ -56,6 +63,7 @@ class Contact extends Request
 
     public function addContent(\SimpleXMLElement $updateXML)
     {
+        parent::addContent($updateXML);
         $contactNS   = self::UPDATE_NAMESPACE;
         $extensionNS = self::UPDATE_EXTENSION_NAMESPACE;
 
@@ -66,7 +74,16 @@ class Contact extends Request
         $update->addAttribute('xsi:schemaLocation', $contactXSI);
         $update->addChild(self::VALUE_NAME, $this->contact, $contactNS);
 
-
+        /**
+         * 
+         * updateNS
+         * extensionNS
+         * parent::updateXSI
+         * parent::extensionXSI
+         * 
+         * 
+         */
+        
         $addBlock = $updateXML->addChild('add', '', $contactNS);
 
         foreach ($this->add as $field) {
@@ -104,5 +121,24 @@ class Contact extends Request
     public function setContact($contact)
     {
         $this->contact = $contact;
+    }
+    
+    public function getObject()
+    {
+        return $this->contact->getId();
+    }
+    
+    /**
+     * An Exception is thrown if the object is not of type \SclNominetEpp\Contact
+     *
+     * @throws Exception
+     */
+    public function objectValidate($contact)
+    {
+        if (!$contact instanceof ContactObject) {
+            $exception = sprintf('A valid contact object was not passed to UpdateContact, Ln:%d', __LINE__);
+            throw new Exception($exception);
+        }
+        return true;
     }
 }

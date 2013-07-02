@@ -16,8 +16,9 @@ class Response implements ResponseInterface
 {
     /**
      * {@link http://tools.ietf.org/html/rfc4930#section-3 Result Codes}
+     * (e.g. XYZZ where X, Y and Z are numbers.)
      */
-    //RESULT SUCCESS CODES  (1YZZ)
+    //RESULT SUCCESS CODES  (e.g. 1YZZ)
     const SUCCESS_STANDARD          = 1000;
     const SUCCESS_ACTION_PENDING    = 1001;
     const SUCCESS_NO_MESSAGES       = 1300;

@@ -3,7 +3,8 @@
 namespace SclNominetEpp\Request\Update;
 
 use SclNominetEpp\Response\Update\UpdateContactID as UpdateContactIDResponse;
-use SclNominetEpp\Request;
+use SclNominetEpp\Request\Update\AbstractUpdate;
+use SclNominetEpp\Contact as ContactObject;
 use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
 
 /**
@@ -11,23 +12,30 @@ use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
  *
  * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
  */
-class ContactID extends Request
+class ContactID extends AbstractUpdate
 {
-    const TYPE = 'contact'; //For possible Abstracting later
+    const TYPE = 'contact-id'; //For possible Abstracting later
     const UPDATE_NAMESPACE = 'urn:ietf:params:xml:ns:contact-1.0';
 
     const VALUE_NAME = 'id';
 
-    protected $newContactID = null;
-    protected $value;
+    protected $contactID = null;
+    protected $newContactID;
 
     private $add = array();
     private $remove = array();
 
-    public function __construct($value)
+    public function __construct($contactID, $newContactID)
     {
-        parent::__construct('update', new UpdateContactIDResponse());
-        $this->value = $value;
+        parent::__construct(
+                self::TYPE, 
+                new UpdateContactIDResponse(), 
+                self::UPDATE_NAMESPACE, 
+                self::VALUE_NAME
+                );
+        
+        $this->contactID    = $contactID;
+        $this->newContactID = $newContactID;
     }
 
     /**
@@ -62,11 +70,30 @@ class ContactID extends Request
         $update->addAttribute('xsi:schemaLocation', $contactXSI);
         $update->addChild(self::VALUE_NAME, $this->contactID, self::UPDATE_NAMESPACE);
         $change = $update->addChild('chg');
-        $change->addChild(self::VALUE_NAME, $this->value);
+        $change->addChild(self::VALUE_NAME, $this->newContactID);
     }
 
     public function setContactID($contactID)
     {
         $this->contactID = $contactID;
+    }
+    
+    public function getObject()
+    {
+        return $this->contactID;
+    }
+    
+    /**
+     * An Exception is thrown if the object is not of type \SclNominetEpp\Contact
+     *
+     * @throws Exception
+     */
+    public function objectValidate($contact)
+    {
+        if (!$contact instanceof ContactObject) {
+            $exception = sprintf('A valid contact object was not passed to UpdateContact, Ln:%d', __LINE__);
+            throw new Exception($exception);
+        }
+        return true;
     }
 }

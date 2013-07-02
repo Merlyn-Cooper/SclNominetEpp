@@ -1,22 +1,3 @@
-<?php
-
-use \SclNominetEpp\Nominet;
-use \SclNominetEpp\Communicator;
-use \SclSocket\Socket;
-
-require_once(__DIR__ . "/../vendor/autoload.php");
-
-$config = include __DIR__ . '/../bin/test_epp.config.php';
-
-$communicator = new Communicator(new Socket);
-$communicator->connect($config['live']);
-
-$nominet = new Nominet();
-$nominet->setCommunicator($communicator);
-
-$nominet->login($config['username'], $config['password']);
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,7 +5,7 @@ $nominet->login($config['username'], $config['password']);
         <title></title>
     </head>
     <body>
-        <form action="" method="post">
+        <form action="updatedomaindetails.php" method="post">
         Domain:<input type="text" name="dname">
         <input type="submit" value="Submit">
         </form>

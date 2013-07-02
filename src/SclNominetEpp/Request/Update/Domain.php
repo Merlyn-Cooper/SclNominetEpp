@@ -3,7 +3,7 @@
 namespace SclNominetEpp\Request\Update;
 
 use SclNominetEpp\Response\Update\Domain as UpdateDomainResponse;
-use SclNominetEpp\Request;
+use SclNominetEpp\Domain as DomainObject;
 use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
 
 /**
@@ -11,7 +11,7 @@ use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
  *
  * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
  */
-class Domain extends Request
+class Domain extends AbstractUpdate
 {
     const TYPE = 'domain'; //For possible Abstracting later
     const UPDATE_NAMESPACE = 'urn:ietf:params:xml:ns:domain-1.0';
@@ -49,10 +49,16 @@ class Domain extends Request
      *
      * @param string $value
      */
-    public function __construct($value)
+    public function __construct(DomainObject $domain)
     {
-        parent::__construct('update', new UpdateDomainResponse());
-        $this->value = $value;
+        parent::__construct(
+                self::TYPE, 
+                new UpdateDomainResponse(), 
+                self::UPDATE_NAMESPACE, 
+                self::VALUE_NAME, 
+                self::UPDATE_EXTENSION_NAMESPACE
+                );
+        $this->domain = $domain;
     }
 
     /**
@@ -93,8 +99,13 @@ class Domain extends Request
 
         $update = $updateXML->addChild('domain:update', '', $domainNS);
         $update->addAttribute('xsi:schemaLocation', $domainXSI);
-        $update->addChild(self::VALUE_NAME, $this->value, $domainNS);
+        $update->addChild(self::VALUE_NAME, $this->domain, $domainNS);
 
+        /**
+         * 
+         * 
+         * 
+         */
         $addBlock = $update->addChild('add', '', $domainNS);
 
         foreach ($this->add as $field) {
@@ -133,5 +144,29 @@ class Domain extends Request
     public function setDomain($domain)
     {
         $this->domain = $domain;
+    }
+       
+    public function getName()
+    {
+        return $this->domain->getName();
+    }
+
+    protected function getObject()
+    {
+        
+    }
+
+    /**
+     * An Exception is thrown if the object is not of type \SclNominetEpp\Domain
+     *
+     * @throws Exception
+     */
+    protected function objectValidate( $domain )
+    {
+        if (!$domain instanceof DomainObject) {
+            $exception = sprintf('A valid contact object was not passed to UpdateDomain, Ln:%d', __LINE__);
+            throw new Exception($exception);
+        }
+        return true;
     }
 }
