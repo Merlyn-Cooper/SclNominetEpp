@@ -35,7 +35,7 @@ class Contact extends AbstractUpdate
                 self::UPDATE_NAMESPACE, 
                 self::VALUE_NAME, 
                 self::UPDATE_EXTENSION_NAMESPACE
-                );
+        );
         $this->contact = $contact;
     }
 

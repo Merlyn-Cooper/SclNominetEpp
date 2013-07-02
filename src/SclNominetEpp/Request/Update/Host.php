@@ -31,7 +31,7 @@ class Host extends AbstractUpdate
                 new UpdateHostResponse(), 
                 self::UPDATE_NAMESPACE, 
                 self::VALUE_NAME
-                );
+        );
         $this->host = $host;
     }
 
@@ -98,12 +98,17 @@ class Host extends AbstractUpdate
      *
      * @throws Exception
      */
-    protected function objectValidate( $host )
+    protected function objectValidate( $host)
     {
         if (!$host instanceof Nameserver) {
             $exception = sprintf('A valid contact object was not passed to UpdateHost, Ln:%d', __LINE__);
             throw new Exception($exception);
         }
         return true;
+    }
+
+    protected function getObject()
+    {
+        
     }
 }

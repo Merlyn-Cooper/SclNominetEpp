@@ -20,7 +20,4 @@ class DomainAuthInfo implements UpdateFieldInterface
         $authInfo   = $xml->addChild('authInfo', '', $namespace);
         $authInfo->addAttribute('pw', $this->passwd, $namespace);
     }
-    
 }
-
-?>

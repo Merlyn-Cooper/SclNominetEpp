@@ -57,7 +57,7 @@ class Domain extends AbstractUpdate
                 self::UPDATE_NAMESPACE, 
                 self::VALUE_NAME, 
                 self::UPDATE_EXTENSION_NAMESPACE
-                );
+        );
         $this->domain = $domain;
     }
 

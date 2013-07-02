@@ -32,7 +32,7 @@ class ContactID extends AbstractUpdate
                 new UpdateContactIDResponse(), 
                 self::UPDATE_NAMESPACE, 
                 self::VALUE_NAME
-                );
+        );
         
         $this->contactID    = $contactID;
         $this->newContactID = $newContactID;

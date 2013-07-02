@@ -45,5 +45,3 @@ class ContactFax implements UpdateFieldInterface
              </contact:disclose>
      */
 }
-
-?>
