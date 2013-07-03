@@ -526,7 +526,7 @@ class Domain
     {
         $this->password = (string) $password;
     }
-    
+
     /**
      * Get $this->password
      *

@@ -13,19 +13,19 @@ class ContactPhone implements UpdateFieldInterface
      * @var type
      */
     private $phone;
-    
+
     /**
-     * 
+     *
      * @param type $voice
      */
     public function __construct($voice)
     {
         $this->phone     = $phone;
     }
-    
+
     /**
-     * 
-     * 
+     *
+     *
      * @param \SimpleXMLElement $xml
      * @param type $namespace
      */

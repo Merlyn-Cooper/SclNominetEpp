@@ -23,7 +23,7 @@ class Status implements UpdateFieldInterface
      * function fieldXml allows dynamic child and attribute association with a SimpleXMLElement.
      * @param SimpleXMLElement $xml
      * @param type $namespace
-     * 
+     *
      */
     public function fieldXml(SimpleXMLElement $xml, $namespace)
     {
@@ -31,3 +31,4 @@ class Status implements UpdateFieldInterface
         $status->addAttribute('s', $this->status);
     }
 }
+

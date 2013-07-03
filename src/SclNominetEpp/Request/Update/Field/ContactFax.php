@@ -13,19 +13,19 @@ class ContactFax implements UpdateFieldInterface
      * @var type
      */
     private $fax;
-    
+
     /**
-     * 
+     *
      * @param type $voice
      */
     public function __construct($fax)
     {
         $this->fax     = $fax;
     }
-    
+
     /**
-     * 
-     * 
+     *
+     *
      * @param \SimpleXMLElement $xml
      * @param type $namespace
      */
@@ -35,7 +35,7 @@ class ContactFax implements UpdateFieldInterface
 
     }
     /**
-     *          
+     *
              <contact:authInfo>
                <contact:pw>2fooBAR</contact:pw>
              </contact:authInfo>

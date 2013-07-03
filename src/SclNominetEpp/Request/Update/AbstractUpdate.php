@@ -15,34 +15,34 @@ abstract class AbstractUpdate extends Request
 {
     /**
      * What needs adding.
-     * @var array 
+     * @var array
      */
     protected $add;
     /**
      * What needs removing.
-     * @var array 
+     * @var array
      */
     protected $remove;
     /**
      * What needs changing.
-     * @var array 
+     * @var array
      */
     protected $change;
-    
+
     protected $type;
 
     protected $updateNamespace;
 
     protected $valueName;
-    
+
     protected $updateExtensionNamespace;
 
     protected $value;
-    
+
     protected $extensionExists = false;
-    
+
     protected $updateXSI;
-    
+
     protected $extensionXSI;
 
     /**
@@ -64,27 +64,27 @@ abstract class AbstractUpdate extends Request
             $this->extensionExists = true;
         }
     }
-    
+
     public function addContent(SimpleXMLElement $updateXML)
     {
         parent::addContent($updateXML);
         $updateNS   = $this->updateNamespace;
-        
+
         if ($this->extensionExists) {
             $extensionNS = $this->updateExtensionNamespace;
         }
-        
+
         $updateXSI   =   $updateNS . ' ' . "{$this->type}-1.0.xsd";
         $this->updateXSI = $updateXSI;
-        
+
         if ($this->extensionExists) {
             $this->extensionXSI = $extensionNS . ' ' . "{$this->type}-nom-ext-1.1.xsd";
         }
-        
+
         $update = $updateXML->addChild("{$this->type}:update", '', $updateNS);
         $update->addAttribute('xsi:schemaLocation', $updateXSI);
         $update->addChild($this->valueName, $this->getName(), $updateNS);
-        
+
         if (!empty($this->remove)) {
             $addBlock = $updateXML->addChild('add', '', $updateNS);
             foreach ($this->add as $field) {
@@ -92,21 +92,21 @@ abstract class AbstractUpdate extends Request
             }
         }
 
-        
+
         if (!empty($this->remove)) {
             $remBlock = $updateXML->addChild('rem', '', $updateNS);
             foreach ($this->remove as $field) {
                 $field->fieldXml($remBlock, $updateNS);
             }
         }
-        
+
         if (!empty($this->change)) {
             $chgBlock = $updateXML->addChild('chg', '', $updateNS);
             foreach ($this->change as $field) {
                 $field->fieldXml($chgBlock, $updateNS);
             }
         }
-        
+
     }
 
     abstract protected function getName();
@@ -119,7 +119,7 @@ abstract class AbstractUpdate extends Request
      * @throws Exception
      */
     abstract protected function objectValidate($object);
-    
+
     public function lookup($value)
     {
         $this->value = $value;
@@ -150,7 +150,7 @@ abstract class AbstractUpdate extends Request
     {
         $this->remove[] = $field;
     }
-    
+
     /**
      * The <b>change()</b> function assigns a Field object as an element of the change array
      * for including specific fields in the update request "{$this->type}:chg" tag.

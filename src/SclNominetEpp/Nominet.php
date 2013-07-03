@@ -30,7 +30,7 @@ class Nominet extends AbstractRequestResponse
      * @todo STATUS may be divided into Domain and Name Server, important!
      * "draft-hollenbeck-rfc2832bis-01.html" check out 2.1.1 and 2.1.2.
      * http://archive.icann.org/
-     * 
+     *
      * A client MUST NOT alter status values set by the server.
      * A server MAY alter or override status values set by a client, subject to local server policies.
      * Status values that can be added or removed by a client are prefixed with "client".
@@ -346,7 +346,7 @@ class Nominet extends AbstractRequestResponse
         $currentContacts    = $currentDomain->getContacts();
         $currentRegistrant  = $currentDomain->getRegistrant();
         $currentPassword    = $currentDomain->getPassword();
-        
+
         $newNameservers     = $domain->getNameservers();
         $newContacts        = $domain->getContacts();
         $newRegistrant      = $domain->getRegistrant();
@@ -372,7 +372,7 @@ class Nominet extends AbstractRequestResponse
             $newNameservers,
             array('\SclNominetEpp\Request\Update\Helper\DomainCompareHelper', 'compare')
         );
-        
+
         /**
          * ADD
          */
@@ -390,7 +390,7 @@ class Nominet extends AbstractRequestResponse
         }
 
         $request->add(new Update\Field\Status('Payment Overdue', self::STATUS_CLIENT_HOLD));
-        
+
         /**
          * REMOVE
          */
@@ -409,15 +409,15 @@ class Nominet extends AbstractRequestResponse
         /**
          * CHANGE
          */
-        
+
         if ($newRegistrant !== $currentRegistrant && $newRegistrant !== "") {
             $request->change(new Update\Field\DomainRegistrant($newRegistrant));
         }
-        
+
         if ($newPassword !== $currentPassword && $newPassword !== "") {
             $request->change(new Update\Field\AuthInfo($newPassword));
         }
-        
+
         //$request->remove(new Update\Field\DomainNameserver('ns1.example.com'));
         //$request->remove(new Update\Field\DomainContact('mak32', 'tech'));
 
@@ -433,7 +433,7 @@ class Nominet extends AbstractRequestResponse
     public function updateContact(Contact $contact)
     {
         $this->loginCheck();
-        
+
         $request = new Request\Update\Contact($contact);
         $request->setContact($contact);
 
@@ -441,7 +441,7 @@ class Nominet extends AbstractRequestResponse
         if (!$currentContact instanceof Contact) {
             throw new Exception("The domain requested for updating is unregistered.");
         }
-        
+
         $currentFax         = $currentContact->getFax();
         $currentPhone       = $currentContact->getPhone();
         /**
@@ -449,7 +449,7 @@ class Nominet extends AbstractRequestResponse
          */
         $currentAddress     = $currentContact->getAddress();
         $currentPassword    = $currentContact->getPassword();
-        
+
         $newFax             = $contact->getFax();
         $newPhone           = $contact->getPhone();
         /**
@@ -458,8 +458,8 @@ class Nominet extends AbstractRequestResponse
         $newAddress         = $contact->getAddress();
         $newPassword        = $contact->getPassword();
         /*
-         * chg items:- 
-         * 
+         * chg items:-
+         *
          * postalInfo type "int"|"loc"
          *  name
          *  org
@@ -469,25 +469,25 @@ class Nominet extends AbstractRequestResponse
          * pw
          * disclose
          */
-        
+
         /**
          * ADD
          */
         //if () {
             $request->add(new Update\Field\Status('', self::STATUS_CLIENT_DELETE_PROHIBITED));
         //}
-        
+
         /**
          * REMOVE
          */
         //if () {
             $request->remove(new Update\Field\Status('', self::STATUS_CLIENT_DELETE_PROHIBITED));
         //}
-        
+
         /**
          * CHANGE
          */
-        if ($newAddress !== $currentAddress) {
+        if ($newAddress != $currentAddress) {
             $request->change(new Update\Field\ContactAddress($newAddress));
         }
         if ($newPhone !== $currentPhone && $newPhone !== "") {
@@ -499,8 +499,8 @@ class Nominet extends AbstractRequestResponse
         if ($newPassword !== $currentPassword && $newPassword !== "") {
             $request->change(new Update\Field\AuthInfo($newPassword));
         }
-        
-        
+
+
         $response = $this->processRequest($request);
 
         return $response;
@@ -514,7 +514,7 @@ class Nominet extends AbstractRequestResponse
         $this->loginCheck();
 
         $request = new Request\Update\ContactID();
-        
+
         $request->add(new Update\Field\Status('', self::STATUS_CLIENT_HOLD));
 
         $response = $this->processRequest($request);

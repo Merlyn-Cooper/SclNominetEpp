@@ -10,35 +10,35 @@ class ContactDisclose implements UpdateFieldInterface
 {
     /**
      * The "flag" attribute contains an XML Schema boolean value.
-     * 
+     *
      * A value of "true" or "1" (one) notes a client preference to
-     * allow disclosure of the specified elements as an exception 
-     * to the stated data-collection policy.  
-     * 
-     * A value of "false" or "0" (zero) notes a client preference 
-     * to not allow disclosure of the specified elements as 
+     * allow disclosure of the specified elements as an exception
+     * to the stated data-collection policy.
+     *
+     * A value of "false" or "0" (zero) notes a client preference
+     * to not allow disclosure of the specified elements as
      * an exception to the stated data-collection policy.
-     * 
-     * @var string 
+     *
+     * @var string
      */
     private $flag;
-    
+
     /**
      *
      * @var mixed
      */
     private $discloseArray = array();
-    
+
     /**
      * Area can be either "loc" or "int".
-     * 
-     * If an internationalized form (type="int") is provided, 
-     * element content MUST be represented in a subset of UTF-8 
+     *
+     * If an internationalized form (type="int") is provided,
+     * element content MUST be represented in a subset of UTF-8
      * that can be represented in the 7-bit US-ASCII character set.
-     *   
-     * If a localized form (type="loc") is provided, 
-     * element content MAY be represented in unrestricted UTF-8. 
-     * 
+     *
+     * If a localized form (type="loc") is provided,
+     * element content MAY be represented in unrestricted UTF-8.
+     *
      * @var string
      */
     private $type;
@@ -55,7 +55,7 @@ class ContactDisclose implements UpdateFieldInterface
         if (empty($this->discloseArray)) {
             return;
         }
-        
+
         $authInfo   = $xml->addChild('disclose', '', $namespace);
         $authInfo->addAttribute('flag', $this->flag, $namespace);
         foreach ($this->discloseArray as $name => $value) {

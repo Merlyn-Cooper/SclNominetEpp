@@ -129,7 +129,7 @@ class Contact extends \SclContact\Contact
      * @var string
      */
     private $password;
-    
+
     /**
      * Constructor
      */
@@ -320,10 +320,10 @@ class Contact extends \SclContact\Contact
     {
         return $this->clientID;
     }
-    
+
     /**
      * Set $this->password
-     * 
+     *
      * @param string $password
      */
     public function setPassword($password)
@@ -333,7 +333,7 @@ class Contact extends \SclContact\Contact
 
     /**
      * Get $this->password
-     * 
+     *
      * @return string
      */
     public function getPassword()

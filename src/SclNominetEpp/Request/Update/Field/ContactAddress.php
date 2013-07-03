@@ -4,7 +4,7 @@ namespace SclNominetEpp\Request\Update\Field;
 use SclNominetEpp\Address;
 
 /**
- * UpdateContact "chg" uses "postalInfo" as a field with "type" as an attribute 
+ * UpdateContact "chg" uses "postalInfo" as a field with "type" as an attribute
  * (either "loc" or "int").
  *
  * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
@@ -35,7 +35,7 @@ class ContactAddress implements UpdateFieldInterface
     {
         $postalInfo = $xml->addChild('postalInfo', '', $namespace);
         $postalInfo->addAttribute('type', $this->type);
-        
+
         //Line1 and Line2 are Streets.
         if (null != $this->address->getLine1()) {
             $postalInfo->addChild('street', $this->address->getLine1());
