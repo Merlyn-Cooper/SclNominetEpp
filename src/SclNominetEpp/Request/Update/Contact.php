@@ -66,11 +66,14 @@ class Contact extends AbstractUpdate
          * 
          */
 
-        
-        $chge   = $update->addChild('chg', '', $contactNS);
-        foreach ($this->change as $change) {
-            $field->fieldXml($changeBlock);
+        if (!empty($this->change)) {
+            $change   = $update->addChild('chg', '', $contactNS);
+            foreach ($this->change as $change) {
+                $field->fieldXml($change);
+            }
         }
+        /*
+         * This section is relevant to "change" above as reference.
             $postalInfo = $change->addChild('postalInfo');
             $postalInfo->addAttribute('type', $this->addressType);
                 $postalInfo->addChild('name');
@@ -80,6 +83,8 @@ class Contact extends AbstractUpdate
                     $addr->addChild('sp');
                     $addr->addChild('pc');
                     $addr->addChild('cc');
+        */         
+                    
         $extensionXML = $this->xml->command->addChild('extension');
         $extension = $extensionXML->addChild("{" . parent::type . "}-nom-ext:update", '', $extensionNS);
         $extension->addAttribute('xsi:schemaLocation', parent::extensionXSI);
