@@ -31,4 +31,3 @@ class Status implements UpdateFieldInterface
         $status->addAttribute('s', $this->status);
     }
 }
-
