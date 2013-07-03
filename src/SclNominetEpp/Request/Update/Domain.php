@@ -122,11 +122,6 @@ class Domain extends AbstractUpdate
         return $this->domain->getName();
     }
 
-    protected function getObject()
-    {
-
-    }
-
     /**
      * An Exception is thrown if the object is not of type \SclNominetEpp\Domain
      *

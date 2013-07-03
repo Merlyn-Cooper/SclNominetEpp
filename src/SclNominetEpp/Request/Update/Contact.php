@@ -84,8 +84,8 @@ class Contact extends AbstractUpdate
         */
 
         $extensionXML = $this->xml->command->addChild('extension');
-        $extension = $extensionXML->addChild("{" . parent::type . "}-nom-ext:update", '', $extensionNS);
-        $extension->addAttribute('xsi:schemaLocation', parent::extensionXSI);
+        $extension = $extensionXML->addChild("{" . $this->type . "}-nom-ext:update", '', $extensionNS);
+        $extension->addAttribute('xsi:schemaLocation', $this->extensionXSI);
 
         $extension->addChild('trad-name');
         $extension->addChild('type');
@@ -100,7 +100,7 @@ class Contact extends AbstractUpdate
         $this->contact = $contact;
     }
 
-    public function getObject()
+    public function getName()
     {
         return $this->contact->getId();
     }

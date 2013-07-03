@@ -60,7 +60,7 @@ abstract class AbstractUpdate extends Request
         $this->updateNamespace = $updateNamespace;
         $this->valueName       = $valueName;
         if (null != $updateExtensionNamespace) {
-            $this->updateExtensionNamespace = $updateExtensionNamespace; 
+            $this->updateExtensionNamespace = $updateExtensionNamespace;
             $this->extensionExists = true;
         }
     }
@@ -83,7 +83,7 @@ abstract class AbstractUpdate extends Request
         
         $update = $updateXML->addChild("{$this->type}:update", '', $updateNS);
         $update->addAttribute('xsi:schemaLocation', $updateXSI);
-        $update->addChild($this->valueName, $this->getObject(), $updateNS);
+        $update->addChild($this->valueName, $this->getName(), $updateNS);
         
         if (!empty($this->remove)) {
             $addBlock = $updateXML->addChild('add', '', $updateNS);
@@ -109,7 +109,7 @@ abstract class AbstractUpdate extends Request
         
     }
 
-    abstract protected function getObject();
+    abstract protected function getName();
 
     /**
      * Valdiates whether the object is of the correct class.

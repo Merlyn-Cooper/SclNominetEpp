@@ -25,7 +25,7 @@ class ContactID extends AbstractUpdate
     private $add = array();
     private $remove = array();
 
-    public function __construct($contactID, $newContactID)
+    public function __construct(ContactObject $contactID, ContactObject $newContactID)
     {
         parent::__construct(
             self::TYPE,
@@ -61,9 +61,13 @@ class ContactID extends AbstractUpdate
         $this->contactID = $contactID;
     }
 
-    public function getObject()
+    /**
+     * @todo contactID needs a ->getId() or ->getName() function.
+     * @return string
+     */
+    public function getName()
     {
-        return $this->contactID;
+        return $this->contactID->getId();
     }
 
     /**
@@ -74,7 +78,7 @@ class ContactID extends AbstractUpdate
     public function objectValidate($contact)
     {
         if (!$contact instanceof ContactObject) {
-            $exception = sprintf('A valid contact object was not passed to UpdateContact, Ln:%d', __LINE__);
+            $exception = sprintf('A valid contact object was not passed to UpdateContactID, Ln:%d', __LINE__);
             throw new Exception($exception);
         }
         return true;
