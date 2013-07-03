@@ -28,7 +28,8 @@ class Nominet extends AbstractRequestResponse
 {
     /**
      * @todo STATUS may be divided into Domain and Name Server, important!
-     * @link http://archive.icann.org/en/tlds/org/applications/register/attachments/protocols/rrp/draft-hollenbeck-rfc2832bis-01.html check out 2.1.1 and 2.1.2.
+     * "draft-hollenbeck-rfc2832bis-01.html" check out 2.1.1 and 2.1.2.
+     * http://archive.icann.org/
      * 
      * A client MUST NOT alter status values set by the server.
      * A server MAY alter or override status values set by a client, subject to local server policies.
