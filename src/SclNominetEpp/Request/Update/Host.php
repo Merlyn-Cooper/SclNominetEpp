@@ -27,9 +27,9 @@ class Host extends AbstractUpdate
     public function __construct(  Nameserver $host)
     {
         parent::__construct(
-                self::TYPE, 
-                new UpdateHostResponse(), 
-                self::UPDATE_NAMESPACE, 
+                self::TYPE,
+                new UpdateHostResponse(),
+                self::UPDATE_NAMESPACE,
                 self::VALUE_NAME
         );
         $this->host = $host;
@@ -71,9 +71,9 @@ class Host extends AbstractUpdate
         $update = $updateXML->addChild('host:update', '', $hostNS);
         $update->addAttribute('xsi:schemaLocation', $hostXSI);
         $update->addChild(self::VALUE_NAME, $this->value, $hostNS);
-        
+
         if (!empty($this->change)) {
-            
+
         }
 
     }
@@ -82,12 +82,12 @@ class Host extends AbstractUpdate
     {
         $this->host = $host;
     }
-    
+
     public function getName()
     {
         return $this->host->getHostName();
     }
-    
+
     /**
      * An Exception is thrown if the object is not of type \SclNominetEpp\Nameserver
      *
@@ -104,6 +104,6 @@ class Host extends AbstractUpdate
 
     protected function getObject()
     {
-        
+
     }
 }

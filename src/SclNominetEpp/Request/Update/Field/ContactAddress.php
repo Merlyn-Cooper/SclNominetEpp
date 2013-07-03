@@ -2,6 +2,7 @@
 namespace SclNominetEpp\Request\Update\Field;
 
 use SclNominetEpp\Address;
+
 /**
  * UpdateContact "chg" uses "postalInfo" as a field with "type" as an attribute 
  * (either "loc" or "int").
@@ -20,7 +21,7 @@ class ContactAddress implements UpdateFieldInterface
      *
      * @param type $type
      */
-    public function __construct( Address $address)
+    public function __construct(Address $address)
     {
         $this->address = $address;
     }

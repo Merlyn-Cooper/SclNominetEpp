@@ -58,7 +58,7 @@ class ContactDisclose implements UpdateFieldInterface
         
         $authInfo   = $xml->addChild('disclose', '', $namespace);
         $authInfo->addAttribute('flag', $this->flag, $namespace);
-        foreach ( $this->discloseArray as $name => $value ) {
+        foreach ($this->discloseArray as $name => $value) {
             $discloseItem = $authInfo->addChild($name, $value, $namespace);
             if (!empty($area)) {
                 $discloseItem->addAttribute('type', $area);

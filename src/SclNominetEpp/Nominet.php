@@ -480,7 +480,7 @@ class Nominet extends AbstractRequestResponse
          * REMOVE
          */
         //if () {
-            $request->remove(new Update\Field\Status('', self::STATUS_CLIENT_DELETE_PROHIBITED)); 
+            $request->remove(new Update\Field\Status('', self::STATUS_CLIENT_DELETE_PROHIBITED));
         //}
         
         /**

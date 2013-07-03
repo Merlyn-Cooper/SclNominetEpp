@@ -52,10 +52,10 @@ class Domain extends AbstractUpdate
     public function __construct(DomainObject $domain)
     {
         parent::__construct(
-                self::TYPE, 
-                new UpdateDomainResponse(), 
-                self::UPDATE_NAMESPACE, 
-                self::VALUE_NAME, 
+                self::TYPE,
+                new UpdateDomainResponse(),
+                self::UPDATE_NAMESPACE,
+                self::VALUE_NAME,
                 self::UPDATE_EXTENSION_NAMESPACE
         );
         $this->domain = $domain;
@@ -79,15 +79,15 @@ class Domain extends AbstractUpdate
         $update->addChild(self::VALUE_NAME, $this->domain, $domainNS);
 
         /**
-         * 
-         * 
-         * 
+         *
+         *
+         *
          */
 
         if (!empty($this->change)) {
             $change = $update->addChild('chg');
             foreach ($this->change as $change) {
-                
+
             }
                 $change->addChild('registrant');
             $authInfo = $change->addChild('authInfo');
@@ -116,7 +116,7 @@ class Domain extends AbstractUpdate
     {
         $this->domain = $domain;
     }
-       
+
     public function getName()
     {
         return $this->domain->getName();
@@ -124,7 +124,7 @@ class Domain extends AbstractUpdate
 
     protected function getObject()
     {
-        
+
     }
 
     /**

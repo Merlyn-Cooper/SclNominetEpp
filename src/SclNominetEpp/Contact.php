@@ -326,7 +326,7 @@ class Contact extends \SclContact\Contact
      * 
      * @param string $password
      */
-    public function setPassword( $password )
+    public function setPassword( $password)
     {
         $this->password = $password;
     }
