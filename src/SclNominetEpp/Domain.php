@@ -518,16 +518,6 @@ class Domain
     }
 
     /**
-     * Get $this->password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Set $this->password
      *
      * @param string $password
@@ -535,6 +525,16 @@ class Domain
     public function setPassword($password)
     {
         $this->password = (string) $password;
+    }
+    
+    /**
+     * Get $this->password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     public function __toString()

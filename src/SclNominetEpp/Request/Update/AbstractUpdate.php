@@ -99,6 +99,14 @@ abstract class AbstractUpdate extends Request
                 $field->fieldXml($remBlock, $updateNS);
             }
         }
+        
+        if (!empty($this->change)) {
+            $chgBlock = $updateXML->addChild('chg', '', $updateNS);
+            foreach ($this->change as $field) {
+                $field->fieldXml($chgBlock, $updateNS);
+            }
+        }
+        
     }
 
     abstract protected function getObject();

@@ -31,18 +31,18 @@ class Nominet extends AbstractRequestResponse
      * A server MAY alter or override status values set by a client, subject to local server policies.
      * Status values that can be added or removed by a client are prefixed with "client".
      */
-    const STATUS_CLIENT_DELETE_PROHIBITED      = 'clientDeleteProhibited';
-    const STATUS_CLIENT_HOLD                                 = 'clientHold';
-    const STATUS_CLIENT_RENEW                              = 'clientRenewProhibited';
+    const STATUS_CLIENT_DELETE_PROHIBITED   = 'clientDeleteProhibited';
+    const STATUS_CLIENT_HOLD                = 'clientHold';
+    const STATUS_CLIENT_RENEW_PROHIBITED    = 'clientRenewProhibited';
     const STATUS_CLIENT_TRANSFER_PROHIBITED = 'clientTransferProhibited';
-    const STATUS_CLIENT_UPDATE_PROHIBITED     = 'clientUpdateProhibited';
+    const STATUS_CLIENT_UPDATE_PROHIBITED   = 'clientUpdateProhibited';
 
     // Corresponding status values that can be added or removed by a server are prefixed with "server".
-    const STATUS_SERVER_DELETE_PROHIBITED      = 'serverDeleteProhibited';
-    const STATUS_SERVER_HOLD                                 = 'serverHold';
-    const STATUS_SERVER_RENEW                              = 'serverRenewProhibited';
+    const STATUS_SERVER_DELETE_PROHIBITED   = 'serverDeleteProhibited';
+    const STATUS_SERVER_HOLD                = 'serverHold';
+    const STATUS_SERVER_RENEW_PROHIBITED    = 'serverRenewProhibited';
     const STATUS_SERVER_TRANSFER_PROHIBITED = 'serverTransferProhibited';
-    const STATUS_SERVER_UPDATE_PROHIBITED     = 'serverUpdateProhibited';
+    const STATUS_SERVER_UPDATE_PROHIBITED   = 'serverUpdateProhibited';
 
     /*
      * pending[action]" status MUST NOT be combined
@@ -340,8 +340,13 @@ class Nominet extends AbstractRequestResponse
         }
         $currentNameservers = $currentDomain->getNameservers();
         $currentContacts    = $currentDomain->getContacts();
+        $currentRegistrant  = $currentDomain->getRegistrant();
+        $currentPassword    = $currentDomain->getPassword();
+        
         $newNameservers     = $domain->getNameservers();
         $newContacts        = $domain->getContacts();
+        $newRegistrant      = $domain->getRegistrant();
+        $newPassword        = $domain->getPassword();
 
         $addContacts       = array_uintersect(
             $newContacts,
@@ -363,6 +368,10 @@ class Nominet extends AbstractRequestResponse
             $newNameservers,
             array('\SclNominetEpp\Request\Update\Helper\DomainCompareHelper', 'compare')
         );
+        
+        /**
+         * ADD
+         */
 
         if (!empty($addNameservers)) {
             foreach ($addNameservers as $nameserver) {
@@ -377,7 +386,10 @@ class Nominet extends AbstractRequestResponse
         }
 
         $request->add(new Update\Field\Status('Payment Overdue', self::STATUS_CLIENT_HOLD));
-
+        
+        /**
+         * REMOVE
+         */
         if (!empty($removeNameservers)) {
             foreach ($removeNameservers as $nameserver) {
                 $request->remove(new Update\Field\DomainNameserver($nameserver->getHostName()));
@@ -390,6 +402,18 @@ class Nominet extends AbstractRequestResponse
             }
         }
 
+        /**
+         * CHANGE
+         */
+        
+        if ($newRegistrant !== $currentRegistrant) {
+            $request->change(new Update\Field\DomainRegistrant($newRegistrant));
+        }
+        
+        if ($newPassword !== $currentPassword) {
+            $request->change(new Update\Field\DomainAuthInfo($newPassword));
+        }
+        
         //$request->remove(new Update\Field\DomainNameserver('ns1.example.com'));
         //$request->remove(new Update\Field\DomainContact('mak32', 'tech'));
 

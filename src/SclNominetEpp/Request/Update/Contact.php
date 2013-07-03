@@ -22,9 +22,7 @@ class Contact extends AbstractUpdate
 
     protected $contact = null;
     protected $value;
-
-    private $add = array();
-    private $remove = array();
+    
     private $addressType = "loc";
 
     public function __construct(ContactObject $contact)
