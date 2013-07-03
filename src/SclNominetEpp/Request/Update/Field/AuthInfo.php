@@ -2,11 +2,11 @@
 namespace SclNominetEpp\Request\Update\Field;
 
 /**
- * UpdateContact "chg" uses "authInfo" as a field with "pw" as an attribute.
+ * UpdateDomain|UpdateContact "chg" uses "authInfo" as a field with "pw" as an attribute.
  *
- * @author merlyn
+ * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
  */
-class ContactAuthInfo implements UpdateFieldInterface
+class AuthInfo implements UpdateFieldInterface
 {
     private $passwd;
 
@@ -18,6 +18,6 @@ class ContactAuthInfo implements UpdateFieldInterface
     public function fieldXml(\SimpleXMLElement $xml, $namespace)
     {
         $authInfo   = $xml->addChild('authInfo', '', $namespace);
-        $authInfo->addAttribute('pw', $this->passwd, $namespace);
-    } 
+        $authInfo->addchild('pw', $this->passwd, $namespace);
+    }
 }

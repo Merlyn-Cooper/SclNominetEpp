@@ -64,7 +64,7 @@ class Contact extends \SclContact\Contact
     private $id;
 
     /**
-     * The registered company number or the DfES UK school number of the registrant.
+     * The registered company number or the DfEs UK school number of the registrant.
      *
      * @var string
      */
@@ -114,7 +114,6 @@ class Contact extends \SclContact\Contact
 
     /**
      *
-     *
      * @var string
      */
     private $type;
@@ -124,6 +123,13 @@ class Contact extends \SclContact\Contact
      */
     private $clientID;
 
+    /**
+     * Password
+     *
+     * @var string
+     */
+    private $password;
+    
     /**
      * Constructor
      */
@@ -313,5 +319,25 @@ class Contact extends \SclContact\Contact
     public function getClientID()
     {
         return $this->clientID;
+    }
+    
+    /**
+     * Set $this->password
+     * 
+     * @param string $password
+     */
+    public function setPassword( $password )
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * Get $this->password
+     * 
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 }

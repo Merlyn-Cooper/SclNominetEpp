@@ -26,7 +26,10 @@ use SimpleXMLElement;
  */
 class Nominet extends AbstractRequestResponse
 {
-    /*
+    /**
+     * @todo STATUS may be divided into Domain and Name Server, important!
+     * @link http://archive.icann.org/en/tlds/org/applications/register/attachments/protocols/rrp/draft-hollenbeck-rfc2832bis-01.html check out 2.1.1 and 2.1.2.
+     * 
      * A client MUST NOT alter status values set by the server.
      * A server MAY alter or override status values set by a client, subject to local server policies.
      * Status values that can be added or removed by a client are prefixed with "client".
@@ -406,12 +409,12 @@ class Nominet extends AbstractRequestResponse
          * CHANGE
          */
         
-        if ($newRegistrant !== $currentRegistrant) {
+        if ($newRegistrant !== $currentRegistrant && $newRegistrant !== "") {
             $request->change(new Update\Field\DomainRegistrant($newRegistrant));
         }
         
-        if ($newPassword !== $currentPassword) {
-            $request->change(new Update\Field\DomainAuthInfo($newPassword));
+        if ($newPassword !== $currentPassword && $newPassword !== "") {
+            $request->change(new Update\Field\AuthInfo($newPassword));
         }
         
         //$request->remove(new Update\Field\DomainNameserver('ns1.example.com'));
@@ -430,10 +433,44 @@ class Nominet extends AbstractRequestResponse
     {
         $this->loginCheck();
 
-        $request = new Request\Update\Contact();
-
+        $request = new Request\Update\Contact($contact);
+        
+        $currentPassword    = $contact->getPassword();
+        
+        $newPassword        = $contact->getPassword();
+        /*
+         * chg items:- 
+         * 
+         * postalInfo type "int"|"loc"
+         *  name
+         *  org
+         *  address (Address object)
+         * voice
+         * fax
+         * pw
+         * disclose
+         */
+        
+        /**
+         * ADD
+         */
         $request->add(new Update\Field\Status('', self::STATUS_CLIENT_DELETE_PROHIBITED));
-
+        
+        /**
+         * REMOVE
+         */
+        
+        $request->remove(new Update\Field\DomainNameserver($nameserver->getHostName()));
+        
+        /**
+         * CHANGE
+         */
+        
+        if ($newPassword !== $currentPassword && $newPassword !== "") {
+            $request->change(new Update\Field\AuthInfo($newPassword));
+        }
+        
+        
         $response = $this->processRequest($request);
 
         return $response;
@@ -447,7 +484,7 @@ class Nominet extends AbstractRequestResponse
         $this->loginCheck();
 
         $request = new Request\Update\ContactID();
-
+        
         $request->add(new Update\Field\Status('', self::STATUS_CLIENT_HOLD));
 
         $response = $this->processRequest($request);
