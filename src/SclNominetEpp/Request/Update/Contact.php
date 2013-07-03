@@ -119,7 +119,7 @@ class Contact extends AbstractUpdate
         return true;
     }
 
-    public function setAddressType( $type)
+    public function setAddressType($type)
     {
         $this->addressType = $type;
     }

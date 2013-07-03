@@ -52,11 +52,11 @@ class Domain extends AbstractUpdate
     public function __construct(DomainObject $domain)
     {
         parent::__construct(
-                self::TYPE,
-                new UpdateDomainResponse(),
-                self::UPDATE_NAMESPACE,
-                self::VALUE_NAME,
-                self::UPDATE_EXTENSION_NAMESPACE
+            self::TYPE,
+            new UpdateDomainResponse(),
+            self::UPDATE_NAMESPACE,
+            self::VALUE_NAME,
+            self::UPDATE_EXTENSION_NAMESPACE
         );
         $this->domain = $domain;
     }
@@ -132,7 +132,7 @@ class Domain extends AbstractUpdate
      *
      * @throws Exception
      */
-    protected function objectValidate($domain )
+    protected function objectValidate($domain)
     {
         if (!$domain instanceof DomainObject) {
             $exception = sprintf('A valid contact object was not passed to UpdateDomain, Ln:%d', __LINE__);
