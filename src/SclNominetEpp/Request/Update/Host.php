@@ -57,6 +57,11 @@ class Host extends AbstractUpdate
         $this->remove[] = $field;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param \SimpleXMLElement $updateXML
+     */
     public function addContent(\SimpleXMLElement $updateXML)
     {
         $hostNS  = self::UPDATE_NAMESPACE;
@@ -66,19 +71,9 @@ class Host extends AbstractUpdate
         $update = $updateXML->addChild('host:update', '', $hostNS);
         $update->addAttribute('xsi:schemaLocation', $hostXSI);
         $update->addChild(self::VALUE_NAME, $this->value, $hostNS);
-
-        if (!empty($this->add)) {
-            $addBlock = $update->addChild('add', '', $hostNS);
-            foreach ($this->add as $field) {
-                $field->fieldXml($addBlock, $hostNS);
-            }
-        }
-
-        if (!empty($this->remove)) {
-            $remBlock = $updateXML->addChild('rem', '', $hostNS);
-            foreach ($this->remove as $field) {
-                $field->fieldXml($remBlock, $hostNS);
-            }
+        
+        if (!empty($this->change)) {
+            
         }
 
     }

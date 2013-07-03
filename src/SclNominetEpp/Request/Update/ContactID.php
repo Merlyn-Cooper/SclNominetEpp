@@ -39,27 +39,10 @@ class ContactID extends AbstractUpdate
     }
 
     /**
-     * The <b>add()</b> function assigns a Field object as an element of the add array
-     * for including specific fields in the update request "contactID:add" tag.
+     * {@inheritDoc}
      *
-     * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
+     * @param \SimpleXMLElement $updateXML
      */
-    public function add(UpdateFieldInterface $field)
-    {
-        $this->add[] = $field;
-    }
-
-    /**
-     * The <b>remove()</b> function assigns a Field object as an element of the remove array
-     * for including specific fields in the update request "contactID:remove" tag.
-     *
-     * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
-     */
-    public function remove(UpdateFieldInterface $field)
-    {
-        $this->remove[] = $field;
-    }
-
     public function addContent(SimpleXMLElement $updateXML)
     {
         $contactNS   = self::UPDATE_NAMESPACE;

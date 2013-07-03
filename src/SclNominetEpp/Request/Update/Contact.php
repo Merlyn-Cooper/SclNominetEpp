@@ -38,30 +38,12 @@ class Contact extends AbstractUpdate
         );
         $this->contact = $contact;
     }
-
-
+    
     /**
-     * The <b>add()</b> function assigns a Field object as an element of the add array
-     * for including specific fields in the update request "contact:add" tag.
+     * {@inheritDoc}
      *
-     * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
+     * @param \SimpleXMLElement $updateXML
      */
-    public function add(UpdateFieldInterface $field)
-    {
-        $this->add[] = $field;
-    }
-
-    /**
-     * The <b>remove()</b> function assigns a Field object as an element of the remove array
-     * for including specific fields in the update request "contact:remove" tag.
-     *
-     * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
-     */
-    public function remove(UpdateFieldInterface $field)
-    {
-        $this->remove[] = $field;
-    }
-
     public function addContent(\SimpleXMLElement $updateXML)
     {
         parent::addContent($updateXML);
@@ -83,20 +65,12 @@ class Contact extends AbstractUpdate
          * parent::extensionXSI 
          * 
          */
+
         
-        $addBlock = $updateXML->addChild('add', '', $contactNS);
-
-        foreach ($this->add as $field) {
-            $field->fieldXml($addBlock, $contactNS);
+        $chge   = $update->addChild('chg', '', $contactNS);
+        foreach ($this->change as $change) {
+            $field->fieldXml($changeBlock);
         }
-
-        $remBlock = $updateXML->addChild('rem', '', $contactNS);
-
-        foreach ($this->remove as $field) {
-            $field->fieldXml($remBlock, $contactNS);
-        }
-
-        $change = $update->addChild('chg');
             $postalInfo = $change->addChild('postalInfo');
             $postalInfo->addAttribute('type', $this->addressType);
                 $postalInfo->addChild('name');

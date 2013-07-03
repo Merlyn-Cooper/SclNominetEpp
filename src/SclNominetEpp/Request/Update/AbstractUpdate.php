@@ -13,6 +13,22 @@ use SclNominetEpp\Request\Update\Field\UpdateFieldInterface;
  */
 abstract class AbstractUpdate extends Request
 {
+    /**
+     * What needs adding.
+     * @var array 
+     */
+    protected $add;
+    /**
+     * What needs removing.
+     * @var array 
+     */
+    protected $remove;
+    /**
+     * What needs changing.
+     * @var array 
+     */
+    protected $change;
+    
     protected $type;
 
     protected $updateNamespace;
@@ -53,17 +69,36 @@ abstract class AbstractUpdate extends Request
     {
         parent::addContent($updateXML);
         $updateNS   = $this->updateNamespace;
+        
         if ($this->extensionExists) {
             $extensionNS = $this->updateExtensionNamespace;
         }
+        
         $updateXSI   =   $updateNS . ' ' . "{$this->type}-1.0.xsd";
         $this->updateXSI = $updateXSI;
+        
         if ($this->extensionExists) {
             $this->extensionXSI = $extensionNS . ' ' . "{$this->type}-nom-ext-1.1.xsd";
         }
+        
         $update = $updateXML->addChild("{$this->type}:update", '', $updateNS);
         $update->addAttribute('xsi:schemaLocation', $updateXSI);
         $update->addChild($this->valueName, $this->getObject(), $updateNS);
+        
+        if (!empty($this->remove)) {
+            $addBlock = $updateXML->addChild('add', '', $updateNS);
+            foreach ($this->add as $field) {
+                $field->fieldXml($addBlock, $updateNS);
+            }
+        }
+
+        
+        if (!empty($this->remove)) {
+            $remBlock = $updateXML->addChild('rem', '', $updateNS);
+            foreach ($this->remove as $field) {
+                $field->fieldXml($remBlock, $updateNS);
+            }
+        }
     }
 
     abstract protected function getObject();
@@ -98,7 +133,7 @@ abstract class AbstractUpdate extends Request
 
     /**
      * The <b>remove()</b> function assigns a Field object as an element of the remove array
-     * for including specific fields in the update request "{$this->type}:remove" tag.
+     * for including specific fields in the update request "{$this->type}:rem" tag.
      * ($this->type = 'domain' || 'contact' || 'contact-id' || 'host'; (pseudo-code))
      *
      * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
@@ -106,5 +141,17 @@ abstract class AbstractUpdate extends Request
     protected function remove(UpdateFieldInterface $field)
     {
         $this->remove[] = $field;
+    }
+    
+    /**
+     * The <b>change()</b> function assigns a Field object as an element of the change array
+     * for including specific fields in the update request "{$this->type}:chg" tag.
+     * ($this->type = 'domain' || 'contact' || 'contact-id' || 'host'; (pseudo-code))
+     *
+     * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
+     */
+    protected function change(UpdateFieldInterface $field)
+    {
+        $this->change[] = $field;
     }
 }

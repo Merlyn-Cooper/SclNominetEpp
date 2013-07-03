@@ -62,29 +62,6 @@ class Domain extends AbstractUpdate
     }
 
     /**
-     * The <b>add()</b> function assigns a Field object as an element of the add array
-     * for including specific fields in the update request "domain:add" tag.
-     *
-     * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
-     */
-    public function add(UpdateFieldInterface $field)
-    {
-        $this->add[] = $field;
-    }
-
-    /**
-     * /**
-     * The <b>remove()</b> function assigns a Field object as an element of the remove array
-     * for including specific fields in the update request "domain:remove" tag.
-     *
-     * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
-     */
-    public function remove(UpdateFieldInterface $field)
-    {
-        $this->remove[] = $field;
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @param \SimpleXMLElement $updateXML
@@ -106,32 +83,26 @@ class Domain extends AbstractUpdate
          * 
          * 
          */
-        $addBlock = $update->addChild('add', '', $domainNS);
 
-        foreach ($this->add as $field) {
-            $field->fieldXml($addBlock, $domainNS);
-        }
-
-        $remBlock = $update->addChild('rem', '', $domainNS);
-
-        foreach ($this->remove as $field) {
-            $field->fieldXml($remBlock, $domainNS);
-        }
-
-        $change = $update->addChild('chg');
-            $change->addChild('registrant');
+        if (!empty($this->change)) {
+            $change = $update->addChild('chg');
+            foreach ($this->change as $change) {
+                
+            }
+                $change->addChild('registrant');
             $authInfo = $change->addChild('authInfo');
                 $authInfo->addChild('pw');
+        }
 
         $extensionXML = $this->xml->command->addChild('extension');
         $extension = $extensionXML->addChild('domain-nom-ext:update', '', $extensionNS);
-        $extension->addAttribute('xsi:schemaLocation', $extensionXSI);
+            $extension->addAttribute('xsi:schemaLocation', $extensionXSI);
 
-        $extension->addChild('first-bill');
-        $extension->addChild('recur-bill');
-        $extension->addChild('auto-bill');
-        $extension->addChild('next-bill');
-        $extension->addChild('notes');
+            $extension->addChild('first-bill');
+            $extension->addChild('recur-bill');
+            $extension->addChild('auto-bill');
+            $extension->addChild('next-bill');
+            $extension->addChild('notes');
         //@todo implement all variables, also, fix the extension data.
 
     }
