@@ -6,13 +6,13 @@ namespace SclNominetEpp\Request\Update\Field;
  *
  * @author merlyn
  */
-class ContactVoice implements UpdateFieldInterface
+class ContactPhone implements UpdateFieldInterface
 {
     /**
      *
      * @var type
      */
-    private $voice;
+    private $phone;
     
     /**
      * 
@@ -20,7 +20,7 @@ class ContactVoice implements UpdateFieldInterface
      */
     public function __construct($voice)
     {
-        $this->voice     = $voice;
+        $this->phone     = $phone;
     }
     
     /**
@@ -31,7 +31,7 @@ class ContactVoice implements UpdateFieldInterface
      */
     public function fieldXml(\SimpleXMLElement $xml, $namespace)
     {
-        $xml->addChild('voice', $this->voice, $namespace);
+        $xml->addChild('voice', $this->phone, $namespace);
 
     }
 }

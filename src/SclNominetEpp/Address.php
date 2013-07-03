@@ -3,7 +3,7 @@
 namespace SclNominetEpp;
 
 /**
- * DocBlock: Description of Address
+ * Nominet Class for a postal address using postalInfo
  * @author Merlyn Cooper <merlyn.cooper@hotmail.co.uk>
  */
 class Address extends \SclContact\Address
@@ -25,11 +25,12 @@ class Address extends \SclContact\Address
     }
 
     /**
-     * @todo swap all references of state/province to County
-     *
+     * @todo swap all references of state/province to county
+     * KEEP FOR REFERENCE!
      */
 
     /**
      * @todo swap all references of countryCode to country
+     * KEEP FOR REFERENCE!
      */
 }

@@ -432,11 +432,29 @@ class Nominet extends AbstractRequestResponse
     public function updateContact(Contact $contact)
     {
         $this->loginCheck();
-
+        
         $request = new Request\Update\Contact($contact);
+        $request->setContact($contact);
+
+        $currentContact = $this->contactInfo($contact->getName()); //used to input data into the system.
+        if (!$currentContact instanceof Contact) {
+            throw new Exception("The domain requested for updating is unregistered.");
+        }
         
-        $currentPassword    = $contact->getPassword();
+        $currentFax         = $currentContact->getFax();
+        $currentPhone       = $currentContact->getPhone();
+        /**
+         * @todo NAME OR ORG NAME REQUIRED!
+         */
+        $currentAddress     = $currentContact->getAddress();
+        $currentPassword    = $currentContact->getPassword();
         
+        $newFax             = $contact->getFax();
+        $newPhone           = $contact->getPhone();
+        /**
+         * @todo NAME OR ORG NAME REQUIRED!
+         */
+        $newAddress         = $contact->getAddress();
         $newPassword        = $contact->getPassword();
         /*
          * chg items:- 
@@ -454,18 +472,29 @@ class Nominet extends AbstractRequestResponse
         /**
          * ADD
          */
-        $request->add(new Update\Field\Status('', self::STATUS_CLIENT_DELETE_PROHIBITED));
+        //if () {
+            $request->add(new Update\Field\Status('', self::STATUS_CLIENT_DELETE_PROHIBITED));
+        //}
         
         /**
          * REMOVE
          */
-        
-        $request->remove(new Update\Field\DomainNameserver($nameserver->getHostName()));
+        //if () {
+            $request->remove(new Update\Field\Status('', self::STATUS_CLIENT_DELETE_PROHIBITED)); 
+        //}
         
         /**
          * CHANGE
          */
-        
+        if ($newAddress !== $currentAddress) {
+            $request->change(new Update\Field\ContactAddress($newAddress));
+        }
+        if ($newPhone !== $currentPhone && $newPhone !== "") {
+            $request->change(new Update\Field\ContactPhone($newPhone));
+        }
+        if ($newFax !== $currentFax && $newFax !== "") {
+            $request->change(new Update\Field\ContactFax($newFax));
+        }
         if ($newPassword !== $currentPassword && $newPassword !== "") {
             $request->change(new Update\Field\AuthInfo($newPassword));
         }
