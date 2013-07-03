@@ -41,13 +41,13 @@ class ContactDisclose implements UpdateFieldInterface
      * 
      * @var string
      */
-    private $area;
+    private $type;
 
-    public function __construct($flag, $discloseArray, $area = null)
+    public function __construct($flag, $discloseArray, $type = null)
     {
         $this->flag  = (string) $flag;
         $this->discloseArray = $discloseArray;
-        $this->area = $area;
+        $this->type = $type;
     }
 
     public function fieldXml(\SimpleXMLElement $xml, $namespace)
@@ -60,8 +60,8 @@ class ContactDisclose implements UpdateFieldInterface
         $authInfo->addAttribute('flag', $this->flag, $namespace);
         foreach ($this->discloseArray as $name => $value) {
             $discloseItem = $authInfo->addChild($name, $value, $namespace);
-            if (!empty($area)) {
-                $discloseItem->addAttribute('type', $area);
+            if (!empty($this->type)) {
+                $discloseItem->addAttribute('type', $this->type);
             }
         }
     }

@@ -60,12 +60,12 @@ abstract class AbstractUpdate extends Request
         $this->updateNamespace = $updateNamespace;
         $this->valueName       = $valueName;
         if (null != $updateExtensionNamespace) {
-           $this->updateExtensionNamespace = $updateExtensionNamespace; 
-           $this->extensionExists = true;
+            $this->updateExtensionNamespace = $updateExtensionNamespace; 
+            $this->extensionExists = true;
         }
     }
     
-    public function addContent( SimpleXMLElement $updateXML )
+    public function addContent(SimpleXMLElement $updateXML)
     {
         parent::addContent($updateXML);
         $updateNS   = $this->updateNamespace;

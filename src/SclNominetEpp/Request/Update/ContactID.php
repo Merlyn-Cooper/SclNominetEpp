@@ -28,12 +28,12 @@ class ContactID extends AbstractUpdate
     public function __construct($contactID, $newContactID)
     {
         parent::__construct(
-                self::TYPE, 
-                new UpdateContactIDResponse(), 
-                self::UPDATE_NAMESPACE, 
-                self::VALUE_NAME
+            self::TYPE,
+            new UpdateContactIDResponse(),
+            self::UPDATE_NAMESPACE,
+            self::VALUE_NAME
         );
-        
+
         $this->contactID    = $contactID;
         $this->newContactID = $newContactID;
     }
@@ -60,12 +60,12 @@ class ContactID extends AbstractUpdate
     {
         $this->contactID = $contactID;
     }
-    
+
     public function getObject()
     {
         return $this->contactID;
     }
-    
+
     /**
      * An Exception is thrown if the object is not of type \SclNominetEpp\Contact
      *

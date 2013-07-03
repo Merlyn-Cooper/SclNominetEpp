@@ -132,7 +132,7 @@ class Domain extends AbstractUpdate
      *
      * @throws Exception
      */
-    protected function objectValidate( $domain )
+    protected function objectValidate($domain )
     {
         if (!$domain instanceof DomainObject) {
             $exception = sprintf('A valid contact object was not passed to UpdateDomain, Ln:%d', __LINE__);

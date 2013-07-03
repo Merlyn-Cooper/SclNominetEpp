@@ -24,13 +24,13 @@ class Host extends AbstractUpdate
     private $add = array();
     private $remove = array();
 
-    public function __construct(  Nameserver $host)
+    public function __construct( Nameserver $host)
     {
         parent::__construct(
-                self::TYPE,
-                new UpdateHostResponse(),
-                self::UPDATE_NAMESPACE,
-                self::VALUE_NAME
+            self::TYPE,
+            new UpdateHostResponse(),
+            self::UPDATE_NAMESPACE,
+            self::VALUE_NAME
         );
         $this->host = $host;
     }
@@ -93,7 +93,7 @@ class Host extends AbstractUpdate
      *
      * @throws Exception
      */
-    protected function objectValidate( $host)
+    protected function objectValidate($host)
     {
         if (!$host instanceof Nameserver) {
             $exception = sprintf('A valid contact object was not passed to UpdateHost, Ln:%d', __LINE__);

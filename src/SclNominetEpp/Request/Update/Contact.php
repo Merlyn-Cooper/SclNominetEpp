@@ -22,21 +22,21 @@ class Contact extends AbstractUpdate
 
     protected $contact = null;
     protected $value;
-    
+
     private $addressType = "loc";
 
     public function __construct(ContactObject $contact)
     {
         parent::__construct(
-                self::TYPE, 
-                new UpdateContactResponse(), 
-                self::UPDATE_NAMESPACE, 
-                self::VALUE_NAME, 
-                self::UPDATE_EXTENSION_NAMESPACE
+            self::TYPE,
+            new UpdateContactResponse(),
+            self::UPDATE_NAMESPACE,
+            self::VALUE_NAME,
+            self::UPDATE_EXTENSION_NAMESPACE
         );
         $this->contact = $contact;
     }
-    
+
     /**
      * {@inheritDoc}
      *
@@ -56,12 +56,12 @@ class Contact extends AbstractUpdate
         $update->addChild(self::VALUE_NAME, $this->contact, $contactNS);
 
         /**
-         * 
+         *
          * updateNS
          * extensionNS
          * parent::updateXSI
-         * parent::extensionXSI 
-         * 
+         * parent::extensionXSI
+         *
          */
 
         if (!empty($this->change)) {
@@ -81,8 +81,8 @@ class Contact extends AbstractUpdate
                     $addr->addChild('sp');
                     $addr->addChild('pc');
                     $addr->addChild('cc');
-        */         
-                    
+        */
+
         $extensionXML = $this->xml->command->addChild('extension');
         $extension = $extensionXML->addChild("{" . parent::type . "}-nom-ext:update", '', $extensionNS);
         $extension->addAttribute('xsi:schemaLocation', parent::extensionXSI);
@@ -99,12 +99,12 @@ class Contact extends AbstractUpdate
     {
         $this->contact = $contact;
     }
-    
+
     public function getObject()
     {
         return $this->contact->getId();
     }
-    
+
     /**
      * An Exception is thrown if the object is not of type \SclNominetEpp\Contact
      *
@@ -118,7 +118,7 @@ class Contact extends AbstractUpdate
         }
         return true;
     }
-    
+
     public function setAddressType( $type)
     {
         $this->addressType = $type;
