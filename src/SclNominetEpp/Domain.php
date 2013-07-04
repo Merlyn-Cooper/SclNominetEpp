@@ -16,6 +16,79 @@ class Domain
 
     const BILL_CUSTOMER  = 'bc';
 
+    const STATUS_CLIENT_DELETE_PROHIBITED   = 'clientDeleteProhibited';
+    const STATUS_CLIENT_HOLD                = 'clientHold';
+    const STATUS_CLIENT_RENEW_PROHIBITED    = 'clientRenewProhibited';
+    const STATUS_CLIENT_TRANSFER_PROHIBITED = 'clientTransferProhibited';
+    const STATUS_CLIENT_UPDATE_PROHIBITED   = 'clientUpdateProhibited';
+
+    // Corresponding status values that can be added or removed by a server are prefixed with "server".
+    const STATUS_SERVER_DELETE_PROHIBITED   = 'serverDeleteProhibited';
+    const STATUS_SERVER_HOLD                = 'serverHold';
+    const STATUS_SERVER_RENEW_PROHIBITED    = 'serverRenewProhibited';
+    const STATUS_SERVER_TRANSFER_PROHIBITED = 'serverTransferProhibited';
+    const STATUS_SERVER_UPDATE_PROHIBITED   = 'serverUpdateProhibited';
+
+    /*
+     * pending[action]" status MUST NOT be combined
+     * with either:-
+     * "client[action]Prohibited" or
+     * "server[action]Prohibited" status or
+     * other "pending[action]" status.
+     */
+    const STATUS_PENDING_CREATE   = 'pendingCreate';
+    const STATUS_PENDING_DELETE   = 'pendingDelete';
+    const STATUS_PENDING_RENEW    = 'pendingRenew';
+    const STATUS_PENDING_TRANSFER = 'pendingTransfer';
+    const STATUS_PENDING_UPDATE   = 'pendingUpdate';
+
+    const STATUS_INACTIVE = 'inactive';
+
+    //"ok" status MUST NOT be combined with any other status.
+    const STATUS_OKAY = 'ok';
+    
+    private $domainStatus = array(
+		"OK" => "ok",
+		"HOLD" => array(
+			"SERVER" => "serverHold",
+			"CLIENT" => "clientHold"		
+		),
+		"DELETE" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverDeleteProhibited",
+				"CLIENT" => "clientDeleteProhibited",
+			),
+			"PENDING" => "pendingDelete"
+		),	
+		"TRANSFER" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverTransferProhibited",
+				"CLIENT" => "clientTransferProhibited",
+			),
+			"PENDING" => "pendingTransfer"
+		),	
+		"UPDATE" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverUpdateProhibited",
+				"CLIENT" => "clientUpdateProhibited",
+			),
+			"PENDING" => "pendingUpdate"
+		),	
+		"RENEW" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverRenewProhibited",
+				"CLIENT" => "clientRenewProhibited",
+			),
+			"PENDING" => "pendingRenew"
+		),	
+		"CREATE" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverCreateProhibited",
+				"CLIENT" => "clientCreateProhibited",
+			),
+			"PENDING" => "pendingCreate"
+		),
+	);
     /**
      * Domain name
      *
@@ -514,7 +587,7 @@ class Domain
             return false;
         }
 
-        if ("linked" != $newStatus && in_array('ok', $currentStatuses)) {
+        if (in_array('ok', $this->status)) {
             //fail, "ok" status MAY only be combined with "linked" status.
             return false;
         }
@@ -524,14 +597,14 @@ class Domain
          * "clientDeleteProhibited" or "serverDeleteProhibited" status.
          */
         if (("clientDeleteProhibited" == $newStatus || "serverDeleteProhibited == $newStatus") 
-                && (in_array('pendingDelete', $currentStatuses))) {
+                && (in_array('pendingDelete', $this->status))) {
             //fail
             return false;
         }
 
         if (("pendingDelete" == $newStatus) 
-                && ((in_array('clientDeleteProhibited', $currentStatuses)) 
-                || (in_array('serverDeleteProhibited', $currentStatuses)))) {
+                && ((in_array('clientDeleteProhibited', $this->status)) 
+                || (in_array('serverDeleteProhibited', $this->status)))) {
             //fail
             return false;
         }
@@ -541,14 +614,14 @@ class Domain
          * "clientTransferProhibited" or "serverTransferProhibited" status.
          */	
         if (("clientTransferProhibited" == $newStatus || "serverTransferProhibited == $newStatus") 
-                && (in_array('pendingTransfer', $currentStatuses))) {
+                && (in_array('pendingTransfer', $this->status))) {
             //fail
             return false;
         }
 
         if (("pendingTransfer" == $newStatus) 
-                && ((in_array('clientTransferProhibited', $currentStatuses)) 
-                || (in_array('serverTransferProhibited', $currentStatuses)))) {
+                && ((in_array('clientTransferProhibited', $this->status)) 
+                || (in_array('serverTransferProhibited', $this->status)))) {
             //fail
             return false;
         }
@@ -558,14 +631,14 @@ class Domain
          * "clientUpdateProhibited" or "serverUpdateProhibited" status.
          */
         if (("clientUpdateProhibited" == $newStatus || "serverUpdateProhibited == $newStatus") 
-                && (in_array('pendingUpdate', $currentStatuses))) {
+                && (in_array('pendingUpdate', $this->status))) {
             //fail
             return false;
         }
 
         if (("pendingUpdate" == $newStatus) 
-                && ((in_array('clientUpdateProhibited', $currentStatuses)) 
-                || (in_array('serverUpdateProhibited', $currentStatuses)))) {
+                && ((in_array('clientUpdateProhibited', $this->status)) 
+                || (in_array('serverUpdateProhibited', $this->status)))) {
             //fail
             return false;
         }
@@ -575,22 +648,22 @@ class Domain
          * Other status combinations not expressly prohibited MAY be used.
          */
 
-        if (in_array($newStatus,$this->pendingStatuses)) {
-            foreach ($currentStatuses as $status) {
+        if (in_array($newStatus, $this->pendingStatuses)) {
+            foreach ($this->status as $status) {
                 if (in_array($status, $this->pendingStatuses)) {
                     //fail,
                     return false;
                 }    
             }
         }
-        $this->status = (string) $status;
+        $this->status[] = (string) $status;
         
         return true;
     }
     
     public function getStatuses()
     {
-        return $this->statuses;
+        return $this->status;
     }
     
     /**
