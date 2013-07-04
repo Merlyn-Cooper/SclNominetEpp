@@ -46,12 +46,12 @@ class Domain
 
     //"ok" status MUST NOT be combined with any other status.
     const STATUS_OKAY = 'ok';
-    
+
     private $domainStatus = array(
 		"OK" => "ok",
 		"HOLD" => array(
 			"SERVER" => "serverHold",
-			"CLIENT" => "clientHold"		
+			"CLIENT" => "clientHold"
 		),
 		"DELETE" => array(
 			"PROHIBITED" => array(
@@ -59,28 +59,28 @@ class Domain
 				"CLIENT" => "clientDeleteProhibited",
 			),
 			"PENDING" => "pendingDelete"
-		),	
+		),
 		"TRANSFER" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverTransferProhibited",
 				"CLIENT" => "clientTransferProhibited",
 			),
 			"PENDING" => "pendingTransfer"
-		),	
+		),
 		"UPDATE" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverUpdateProhibited",
 				"CLIENT" => "clientUpdateProhibited",
 			),
 			"PENDING" => "pendingUpdate"
-		),	
+		),
 		"RENEW" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverRenewProhibited",
 				"CLIENT" => "clientRenewProhibited",
 			),
 			"PENDING" => "pendingRenew"
-		),	
+		),
 		"CREATE" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverCreateProhibited",
@@ -123,7 +123,7 @@ class Domain
         "clientCreateProhibited",
         "pendingCreate"
     );
-    
+
     private $pendingStatuses = array(
         "pendingDelete",
         "pendingTransfer",
@@ -131,7 +131,14 @@ class Domain
         "pendingRenew",
         "pendingCreate"
     );
-            
+
+    private $actions = array(
+        "Delete",
+        "Transfer",
+        "Update",
+        "Renew"
+    );
+
     /**
      * The Person, Company or Entity who owns or holds a domain name.
      *
@@ -592,58 +599,105 @@ class Domain
             return false;
         }
 
+        foreach ($this->actions as $action) {
+            /**
+             * "pending" . $action . "" status MUST NOT be combined with either
+             * "clientDeleteProhibited" or "serverDeleteProhibited" status.
+             */
+           if (("client{$action}Prohibited" == $newStatus || "server{$action}Prohibited == $newStatus")
+                   && (in_array("pending{$action}", $this->status))) {
+               //fail
+               return false;
+           }
+
+           if (("pending{$action}" == $newStatus)
+                   && ((in_array("client{$action}Prohibited", $this->status))
+                   || (in_array("server{$action}Prohibited", $this->status)))) {
+               //fail
+               return false;
+           }
+        }
+
+
         /**
+         *
+         *
          * "pendingDelete" status MUST NOT be combined with either
          * "clientDeleteProhibited" or "serverDeleteProhibited" status.
          */
-        if (("clientDeleteProhibited" == $newStatus || "serverDeleteProhibited == $newStatus") 
+        /*
+        if (("clientDeleteProhibited" == $newStatus || "serverDeleteProhibited == $newStatus")
                 && (in_array('pendingDelete', $this->status))) {
             //fail
             return false;
         }
 
-        if (("pendingDelete" == $newStatus) 
-                && ((in_array('clientDeleteProhibited', $this->status)) 
+        if (("pendingDelete" == $newStatus)
+                && ((in_array('clientDeleteProhibited', $this->status))
                 || (in_array('serverDeleteProhibited', $this->status)))) {
             //fail
             return false;
         }
+         *
+         */
 
         /**
          * "pendingTransfer" status MUST NOT be combined with either
          * "clientTransferProhibited" or "serverTransferProhibited" status.
-         */	
-        if (("clientTransferProhibited" == $newStatus || "serverTransferProhibited == $newStatus") 
+         */
+        /*
+        if (("clientTransferProhibited" == $newStatus || "serverTransferProhibited == $newStatus")
                 && (in_array('pendingTransfer', $this->status))) {
             //fail
             return false;
         }
 
-        if (("pendingTransfer" == $newStatus) 
-                && ((in_array('clientTransferProhibited', $this->status)) 
+        if (("pendingTransfer" == $newStatus)
+                && ((in_array('clientTransferProhibited', $this->status))
                 || (in_array('serverTransferProhibited', $this->status)))) {
             //fail
             return false;
-        }
+        }*/
 
-        /* 
+        /*
          * "pendingUpdate" status MUST NOT be combined with either
          * "clientUpdateProhibited" or "serverUpdateProhibited" status.
          */
-        if (("clientUpdateProhibited" == $newStatus || "serverUpdateProhibited == $newStatus") 
+        /*
+        if (("clientUpdateProhibited" == $newStatus || "serverUpdateProhibited == $newStatus")
                 && (in_array('pendingUpdate', $this->status))) {
             //fail
             return false;
         }
 
-        if (("pendingUpdate" == $newStatus) 
-                && ((in_array('clientUpdateProhibited', $this->status)) 
+        if (("pendingUpdate" == $newStatus)
+                && ((in_array('clientUpdateProhibited', $this->status))
+                || (in_array('serverUpdateProhibited', $this->status)))) {
+            //fail
+            return false;
+        }*/
+
+        /*
+         * "pendingRenew" status MUST NOT be combined with either
+         * "clientRenewProhibited" or "serverRenewProhibited" status.
+         */
+        /*
+        if (("clientUpdateProhibited" == $newStatus || "serverUpdateProhibited == $newStatus")
+                && (in_array('pendingUpdate', $this->status))) {
+            //fail
+            return false;
+        }
+
+        if (("pendingUpdate" == $newStatus)
+                && ((in_array('clientUpdateProhibited', $this->status))
                 || (in_array('serverUpdateProhibited', $this->status)))) {
             //fail
             return false;
         }
+        */
+
         /**
-         * The pendingCreate, pendingDelete, pendingTransfer, and pendingUpdate 
+         * The pendingCreate, pendingDelete, pendingTransfer, and pendingUpdate
          * status values MUST NOT be combined with each other.
          * Other status combinations not expressly prohibited MAY be used.
          */
@@ -653,19 +707,19 @@ class Domain
                 if (in_array($status, $this->pendingStatuses)) {
                     //fail,
                     return false;
-                }    
+                }
             }
         }
         $this->status[] = (string) $status;
-        
+
         return true;
     }
-    
+
     public function getStatuses()
     {
         return $this->status;
     }
-    
+
     /**
      * Set $this->regStatus
      * @param string $regStatus

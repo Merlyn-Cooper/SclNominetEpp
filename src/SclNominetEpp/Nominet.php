@@ -70,7 +70,7 @@ class Nominet extends AbstractRequestResponse
 		"OK" => "ok",
 		"HOLD" => array(
 			"SERVER" => "serverHold",
-			"CLIENT" => "clientHold"		
+			"CLIENT" => "clientHold"
 		),
 		"DELETE" => array(
 			"PROHIBITED" => array(
@@ -78,28 +78,28 @@ class Nominet extends AbstractRequestResponse
 				"CLIENT" => "clientDeleteProhibited",
 			),
 			"PENDING" => "pendingDelete"
-		),	
+		),
 		"TRANSFER" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverTransferProhibited",
 				"CLIENT" => "clientTransferProhibited",
 			),
 			"PENDING" => "pendingTransfer"
-		),	
+		),
 		"UPDATE" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverUpdateProhibited",
 				"CLIENT" => "clientUpdateProhibited",
 			),
 			"PENDING" => "pendingUpdate"
-		),	
+		),
 		"RENEW" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverRenewProhibited",
 				"CLIENT" => "clientRenewProhibited",
 			),
 			"PENDING" => "pendingRenew"
-		),	
+		),
 		"CREATE" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverCreateProhibited",
@@ -108,26 +108,26 @@ class Nominet extends AbstractRequestResponse
 			"PENDING" => "pendingCreate"
 		),
 	);
-    
+
     private $nameserverStatus = array(
 		"OK" => "ok",
-		"LINKED" => "linked",	
+		"LINKED" => "linked",
 		"DELETE" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverDeleteProhibited",
 				"CLIENT" => "clientDeleteProhibited",
 			),
 			"PENDING" => "pendingDelete"
-		),	
+		),
 		"TRANSFER" => array(
 			"PENDING" => "pendingTransfer"
-		),	
+		),
 		"UPDATE" => array(
 			"PROHIBITED" => array(
 				"SERVER" => "serverUpdateProhibited",
 				"CLIENT" => "clientUpdateProhibited",
 			)
-		),		
+		),
 	);
     /**
      * Flag that states whether we are logged into Nominet or not.
@@ -410,7 +410,7 @@ class Nominet extends AbstractRequestResponse
         $currentRegistrant  = $currentDomain->getRegistrant();
         $currentPassword    = $currentDomain->getPassword();
         $currentStatuses    = $currentDomain->getStatuses();
-        
+
         $newNameservers     = $domain->getNameservers();
         $newContacts        = $domain->getContacts();
         $newRegistrant      = $domain->getRegistrant();
@@ -437,14 +437,14 @@ class Nominet extends AbstractRequestResponse
             $newNameservers,
             array('\SclNominetEpp\Request\Update\Helper\DomainCompareHelper', 'compare')
         );
-        
+
         $addStatuses       = array_uintersect(
-            $newStatuses, 
+            $newStatuses,
             $currentStatuses,
             array('\SclNominetEpp\Request\Update\Helper\DomainCompareHelper', 'compare')
         );
         $removeStatuses   = array_uintersect(
-            $currentStatuses, 
+            $currentStatuses,
             $newStatuses,
             array('\SclNominetEpp\Request\Update\Helper\DomainCompareHelper', 'compare')
         );
@@ -470,7 +470,7 @@ class Nominet extends AbstractRequestResponse
         /**
          * REMOVE
          */
-        
+
         if (!empty($removeStatuses)) {
             foreach ($removeStatuses as $status ) {
                 $request->remove(new Update\Field\Status(self::STATUS_CLIENT_UPDATE_PROHIBITED));
