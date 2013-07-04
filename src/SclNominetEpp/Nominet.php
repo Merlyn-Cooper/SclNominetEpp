@@ -472,7 +472,9 @@ class Nominet extends AbstractRequestResponse
          */
         
         if (!empty($removeStatuses)) {
-            $request->remove(new Update\Field\Status(self::STATUS_CLIENT_UPDATE_PROHIBITED));
+            foreach ($removeStatuses as $status ) {
+                $request->remove(new Update\Field\Status(self::STATUS_CLIENT_UPDATE_PROHIBITED));
+            }
         }
         if (!empty($removeNameservers)) {
             foreach ($removeNameservers as $nameserver) {

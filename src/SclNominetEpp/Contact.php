@@ -260,12 +260,83 @@ class Contact extends \SclContact\Contact
 
     public function addStatus($status)
     {
-        /*
-         * if (!in_array($needle, $haystack)) {
-         *     throw new;
-         * }
+        if (!in_array($newStatus, $possibleStatus)) {
+            //fail, not a legal status.
+            return false;
+        }
+
+        if ("linked" != $newStatus && in_array('ok', $currentStatai)) {
+            //fail, "ok" status MAY only be combined with "linked" status.
+            return false;
+        }
+
+        /**
+         * "pendingDelete" status MUST NOT be combined with either
+         * "clientDeleteProhibited" or "serverDeleteProhibited" status.
          */
+        if (("clientDeleteProhibited" == $newStatus || "serverDeleteProhibited == $newStatus") 
+                && (in_array('pendingDelete', $currentStatai))) {
+            //fail
+            return false;
+        }
+
+        if (("pendingDelete" == $newStatus) 
+                && ((in_array('clientDeleteProhibited', $currentStatai)) 
+                || (in_array('serverDeleteProhibited', $currentStatai)))) {
+            //fail
+            return false;
+        }
+
+        /**
+         * "pendingTransfer" status MUST NOT be combined with either
+         * "clientTransferProhibited" or "serverTransferProhibited" status.
+         */	
+        if (("clientTransferProhibited" == $newStatus || "serverTransferProhibited == $newStatus") 
+                && (in_array('pendingTransfer', $currentStatai))) {
+            //fail
+            return false;
+        }
+
+        if (("pendingTransfer" == $newStatus) 
+                && ((in_array('clientTransferProhibited', $currentStatai)) 
+                || (in_array('serverTransferProhibited', $currentStatai)))) {
+            //fail
+            return false;
+        }
+
+        /* 
+         * "pendingUpdate" status MUST NOT be combined with either
+         * "clientUpdateProhibited" or "serverUpdateProhibited" status.
+         */
+        if (("clientUpdateProhibited" == $newStatus || "serverUpdateProhibited == $newStatus") 
+                && (in_array('pendingUpdate', $currentStatai))) {
+            //fail
+            return false;
+        }
+
+        if (("pendingUpdate" == $newStatus) 
+                && ((in_array('clientUpdateProhibited', $currentStatai)) 
+                || (in_array('serverUpdateProhibited', $currentStatai)))) {
+            //fail
+            return false;
+        }
+        /**
+         * The pendingCreate, pendingDelete, pendingTransfer, and pendingUpdate 
+         * status values MUST NOT be combined with each other.
+         * Other status combinations not expressly prohibited MAY be used.
+         */
+
+        if (in_array($newStatus,$pendingStatai)) {
+            foreach ($currentStatai as $status) {
+                if (in_array($status, $pendingStatai)) {
+                    //fail,
+                    return false;
+                }    
+            }
+        }
         $this->status = (string) $status;
+        
+        return true;
     }
     
     /**
