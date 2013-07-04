@@ -66,6 +66,69 @@ class Nominet extends AbstractRequestResponse
     //"ok" status MUST NOT be combined with any other status.
     const STATUS_OKAY = 'ok';
 
+    private $domainStatus = array(
+		"OK" => "ok",
+		"HOLD" => array(
+			"SERVER" => "serverHold",
+			"CLIENT" => "clientHold"		
+		),
+		"DELETE" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverDeleteProhibited",
+				"CLIENT" => "clientDeleteProhibited",
+			),
+			"PENDING" => "pendingDelete"
+		),	
+		"TRANSFER" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverTransferProhibited",
+				"CLIENT" => "clientTransferProhibited",
+			),
+			"PENDING" => "pendingTransfer"
+		),	
+		"UPDATE" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverUpdateProhibited",
+				"CLIENT" => "clientUpdateProhibited",
+			),
+			"PENDING" => "pendingUpdate"
+		),	
+		"RENEW" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverRenewProhibited",
+				"CLIENT" => "clientRenewProhibited",
+			),
+			"PENDING" => "pendingRenew"
+		),	
+		"CREATE" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverCreateProhibited",
+				"CLIENT" => "clientCreateProhibited",
+			),
+			"PENDING" => "pendingCreate"
+		),
+	);
+    
+    private $nameserverStatus = array(
+		"OK" => "ok",
+		"LINKED" => "linked",	
+		"DELETE" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverDeleteProhibited",
+				"CLIENT" => "clientDeleteProhibited",
+			),
+			"PENDING" => "pendingDelete"
+		),	
+		"TRANSFER" => array(
+			"PENDING" => "pendingTransfer"
+		),	
+		"UPDATE" => array(
+			"PROHIBITED" => array(
+				"SERVER" => "serverUpdateProhibited",
+				"CLIENT" => "clientUpdateProhibited",
+			)
+		),		
+	);
     /**
      * Flag that states whether we are logged into Nominet or not.
      *
@@ -346,11 +409,13 @@ class Nominet extends AbstractRequestResponse
         $currentContacts    = $currentDomain->getContacts();
         $currentRegistrant  = $currentDomain->getRegistrant();
         $currentPassword    = $currentDomain->getPassword();
-
+        $currentStatuses    = $currentDomain->getStatuses();
+        
         $newNameservers     = $domain->getNameservers();
         $newContacts        = $domain->getContacts();
         $newRegistrant      = $domain->getRegistrant();
         $newPassword        = $domain->getPassword();
+        $newStatuses        = $domain->getStatuses();
 
         $addContacts       = array_uintersect(
             $newContacts,
@@ -372,6 +437,17 @@ class Nominet extends AbstractRequestResponse
             $newNameservers,
             array('\SclNominetEpp\Request\Update\Helper\DomainCompareHelper', 'compare')
         );
+        
+        $addStatuses       = array_uintersect(
+            $newStatuses, 
+            $currentStatuses,
+            array('\SclNominetEpp\Request\Update\Helper\DomainCompareHelper', 'compare')
+        );
+        $removeStatuses   = array_uintersect(
+            $currentStatuses, 
+            $newStatuses,
+            array('\SclNominetEpp\Request\Update\Helper\DomainCompareHelper', 'compare')
+        );
 
         /**
          * ADD
@@ -389,11 +465,15 @@ class Nominet extends AbstractRequestResponse
             }
         }
 
-        $request->add(new Update\Field\Status('Payment Overdue', self::STATUS_CLIENT_HOLD));
+        $request->add(new Update\Field\Status(self::STATUS_CLIENT_HOLD, 'Payment Overdue'));
 
         /**
          * REMOVE
          */
+        
+        if (!empty($removeStatuses)) {
+            $request->remove(new Update\Field\Status(self::STATUS_CLIENT_UPDATE_PROHIBITED));
+        }
         if (!empty($removeNameservers)) {
             foreach ($removeNameservers as $nameserver) {
                 $request->remove(new Update\Field\DomainNameserver($nameserver->getHostName()));

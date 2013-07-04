@@ -30,6 +30,27 @@ class Domain
      */
     private $period = 2;
 
+    private $possibleStatus = array(
+        "ok",
+        "serverHold",
+        "clientHold",
+        "serverDeleteProhibited",
+        "clientDeleteProhibited",
+        "pendingDelete",
+        "serverTransferProhibited",
+        "clientTransferProhibited",
+        "pendingTransfer",
+        "serverUpdateProhibited",
+        "clientUpdateProhibited",
+        "pendingUpdate",
+        "serverRenewProhibited",
+        "clientRenewProhibited",
+        "pendingRenew",
+        "serverCreateProhibited",
+        "clientCreateProhibited",
+        "pendingCreate"
+    );
+            
     /**
      * The Person, Company or Entity who owns or holds a domain name.
      *
@@ -142,11 +163,11 @@ class Domain
     private $nextBill;
 
     /**
-     * Domain's current registration status
+     * Domain's current registration statuses
      *
      * @var string
      */
-    private $regStatus;
+    private $status = array();
 
     /**
      * Miscellaneous information relating to the domain name.
@@ -478,6 +499,16 @@ class Domain
         return $this->nextBill;
     }
 
+    public function addStatus($newStatus)
+    {
+        
+    }
+    
+    public function getStatuses()
+    {
+        return $this->statuses;
+    }
+    
     /**
      * Set $this->regStatus
      * @param string $regStatus

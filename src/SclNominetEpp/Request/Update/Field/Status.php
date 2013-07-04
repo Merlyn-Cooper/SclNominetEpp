@@ -10,13 +10,13 @@ use SimpleXMLElement;
  */
 class Status implements UpdateFieldInterface
 {
-    private $message;
     private $status;
+    private $message;
 
-    public function __construct($message, $status)
+    public function __construct($status, $message = "")
     {
-        $this->message = $message;
         $this->status  = $status;
+        $this->message = $message;
     }
 
     /**

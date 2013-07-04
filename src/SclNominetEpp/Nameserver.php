@@ -24,7 +24,18 @@ class Nameserver
      * @var array|string
      */
     private $status = array();
-
+    
+    private $possibleStatus = array(
+        "ok",
+        "linked",
+        "serverDeleteProhibited",
+        "clientDeleteProhibited",
+        "pendingDelete",
+        "pendingTransfer",
+        "serverUpdateProhibited",
+        "clientUpdateProhibited"
+    );
+    
     /**
      * The identifier of the sponsoring client.
      *

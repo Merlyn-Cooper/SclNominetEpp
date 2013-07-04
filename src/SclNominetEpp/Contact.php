@@ -258,6 +258,16 @@ class Contact extends \SclContact\Contact
         return $this->tradeName;
     }
 
+    public function addStatus($status)
+    {
+        /*
+         * if (!in_array($needle, $haystack)) {
+         *     throw new;
+         * }
+         */
+        $this->status = (string) $status;
+    }
+    
     /**
      * Set $this->companyType
      *
