@@ -79,6 +79,13 @@ class Nameserver
         self::STATUS_PENDING_DELETE,
         self::STATUS_PENDING_TRANSFER
     );
+    
+    private $actions = array(
+        "Delete",
+        "Transfer",
+        "Update",
+        "Renew"
+    );
 
     /**
      * The identifier of the sponsoring client.
