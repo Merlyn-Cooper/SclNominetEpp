@@ -46,8 +46,8 @@ class HostTest extends \PHPUnit_Framework_TestCase
         xsi:schemaLocation="urn:ietf:params:xml:ns:host-1.0 host-1.0.xsd">
         <host:name>ns1.caliban-scl.sch.uk.</host:name>
         <host:roid>739787E8A10BF2CA11882CE974FD775E-UK</host:roid>
-        <host:status s="pendingTransfer"/>
         <host:status s="ok"/>
+        <host:status s="pendingTransfer"/>
         <host:addr ip="v4">1.2.3.4</host:addr>
         <host:clID>UNKNOWN</host:clID>
         <host:crID>NOMINET</host:crID>
@@ -65,8 +65,8 @@ EOX;
 
         $expected = new Nameserver('caliban-scl.sch.uk');
         $expected->setHostName('ns1.caliban-scl.sch.uk.');
-        $expected->addStatus('pendingTransfer');
         $expected->addStatus('ok');
+        $expected->addStatus('pendingTransfer');
         $expected->setIpv4('1.2.3.4');
         $expected->setClientID('UNKNOWN');
         $expected->setCreatorID('NOMINET');
