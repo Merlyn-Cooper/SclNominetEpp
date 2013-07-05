@@ -46,7 +46,7 @@ class Domain
 
     //"ok" status MUST NOT be combined with any other status.
     const STATUS_OKAY = 'ok';
-    
+
     /**
      * Domain name
      *
@@ -62,15 +62,15 @@ class Domain
     private $period = 2;
 
     /**
-     * domainstatus = "OK" / "CLIENTHOLD" / "CLIENTUPDATEPROHIBITED" / 
-     * "CLIENTDELETEPROHIBITED" / "CLIENTRENEWPROHIBITED" / 
-     * "CLIENTTRANSFERPROHIBITED" / "SERVERHOLD" / 
-     * "SERVERUPDATEPROHIBITED" / "SERVERDELETEPROHIBITED" / 
-     * "SERVERRENEWPROHIBITED" / "SERVERTRANSFERPROHIBITED" / 
+     * domainstatus = "OK" / "CLIENTHOLD" / "CLIENTUPDATEPROHIBITED" /
+     * "CLIENTDELETEPROHIBITED" / "CLIENTRENEWPROHIBITED" /
+     * "CLIENTTRANSFERPROHIBITED" / "SERVERHOLD" /
+     * "SERVERUPDATEPROHIBITED" / "SERVERDELETEPROHIBITED" /
+     * "SERVERRENEWPROHIBITED" / "SERVERTRANSFERPROHIBITED" /
      * "PENDINGDELETE" / "PENDINGTRANSFER"
-     * 
-     * 
-     * @var type 
+     *
+     *
+     * @var type
      */
     private $possibleStatus = array(
         self::STATUS_CLIENT_DELETE_PROHIBITED,

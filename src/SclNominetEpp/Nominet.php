@@ -65,7 +65,7 @@ class Nominet extends AbstractRequestResponse
 
     //"ok" status MUST NOT be combined with any other status.
     const STATUS_OKAY = 'ok';
-    
+
     /**
      * Flag that states whether we are logged into Nominet or not.
      *
@@ -419,7 +419,7 @@ class Nominet extends AbstractRequestResponse
                 $request->remove(new Update\Field\DomainContact($contact->getId(), $type));
             }
         }
-        
+
         if (!empty($removeStatuses)) {
             foreach ($removeStatuses as $status) {
                 $request->remove(new Update\Field\Status($status));

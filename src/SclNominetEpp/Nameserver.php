@@ -54,14 +54,14 @@ class Nameserver
      * @var array|string
      */
     private $status = array();
-    
+
     /**
      * nameserverstatus = "OK" / "CLIENTUPDATEPROHIBITED" /
-     * "CLIENTDELETEPROHIBITED" / "SERVERUPDATEPROHIBITED" / 
-     * "SERVERDELETEPROHIBITED" / "LINKED" / 
+     * "CLIENTDELETEPROHIBITED" / "SERVERUPDATEPROHIBITED" /
+     * "SERVERDELETEPROHIBITED" / "LINKED" /
      * "PENDINGTRANSFER" / "PENDINGDELETE"
-     * 
-     * @var type 
+     *
+     * @var type
      */
 
     private $possibleStatus = array(
@@ -74,12 +74,12 @@ class Nameserver
         self::STATUS_SERVER_DELETE_PROHIBITED,
         self::STATUS_SERVER_UPDATE_PROHIBITED,
     );
-    
+
     private $pendingStatuses = array(
         self::STATUS_PENDING_DELETE,
         self::STATUS_PENDING_TRANSFER
     );
-    
+
     private $actions = array(
         "Delete",
         "Transfer",
@@ -182,7 +182,7 @@ class Nameserver
             ////fail, "ok" status MAY only be combined with "linked" status.
             return false;
         }
-        
+
         /*if ('linked' != $newStatus && in_array('ok', $this->status)) {
             //fail, "ok" status MAY only be combined with "linked" status.
             return false;
@@ -206,7 +206,7 @@ class Nameserver
                 return false;
             }
         }
-        
+
         /**
          * The pendingCreate, pendingDelete, pendingTransfer, and pendingUpdate
          * status values MUST NOT be combined with each other.
