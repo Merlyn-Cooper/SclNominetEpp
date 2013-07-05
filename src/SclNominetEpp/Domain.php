@@ -562,7 +562,7 @@ class Domain
             return false;
         }
 
-        if ((!empty($this->status) && 'ok' == $newStatus) 
+        if ((!empty($this->status) && 'ok' == $newStatus)
                 || in_array('ok', $this->status)) {
             //fail, "ok" status MAY only be combined with "linked" status.
             return false;
