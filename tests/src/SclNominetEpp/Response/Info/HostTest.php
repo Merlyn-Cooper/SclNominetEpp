@@ -66,7 +66,7 @@ EOX;
         $expected = new Nameserver('caliban-scl.sch.uk');
         $expected->setHostName('ns1.caliban-scl.sch.uk.');
         $expected->addStatus('ok');
-        $expected->addStatus('linked');
+        $expected->addStatus('pendingDelete');
         $expected->setIpv4('1.2.3.4');
         $expected->setClientID('UNKNOWN');
         $expected->setCreatorID('NOMINET');
