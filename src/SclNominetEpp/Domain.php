@@ -61,33 +61,43 @@ class Domain
      */
     private $period = 2;
 
+    /**
+     * domainstatus = "OK" / "CLIENTHOLD" / "CLIENTUPDATEPROHIBITED" / 
+     * "CLIENTDELETEPROHIBITED" / "CLIENTRENEWPROHIBITED" / 
+     * "CLIENTTRANSFERPROHIBITED" / "SERVERHOLD" / 
+     * "SERVERUPDATEPROHIBITED" / "SERVERDELETEPROHIBITED" / 
+     * "SERVERRENEWPROHIBITED" / "SERVERTRANSFERPROHIBITED" / 
+     * "PENDINGDELETE" / "PENDINGTRANSFER"
+     * 
+     * 
+     * @var type 
+     */
     private $possibleStatus = array(
-        "ok",
-        "serverHold",
-        "clientHold",
-        "serverDeleteProhibited",
-        "clientDeleteProhibited",
-        "pendingDelete",
-        "serverTransferProhibited",
-        "clientTransferProhibited",
-        "pendingTransfer",
-        "serverUpdateProhibited",
-        "clientUpdateProhibited",
-        "pendingUpdate",
-        "serverRenewProhibited",
-        "clientRenewProhibited",
-        "pendingRenew",
-        "serverCreateProhibited",
-        "clientCreateProhibited",
-        "pendingCreate"
+        self::STATUS_CLIENT_DELETE_PROHIBITED,
+        self::STATUS_CLIENT_HOLD,
+        self::STATUS_CLIENT_RENEW_PROHIBITED,
+        self::STATUS_CLIENT_TRANSFER_PROHIBITED,
+        self::STATUS_CLIENT_UPDATE_PROHIBITED,
+        self::STATUS_INACTIVE,
+        self::STATUS_OKAY,
+        self::STATUS_PENDING_CREATE,
+        self::STATUS_PENDING_DELETE,
+        self::STATUS_PENDING_RENEW,
+        self::STATUS_PENDING_TRANSFER,
+        self::STATUS_PENDING_UPDATE,
+        self::STATUS_SERVER_DELETE_PROHIBITED,
+        self::STATUS_SERVER_HOLD,
+        self::STATUS_SERVER_RENEW_PROHIBITED,
+        self::STATUS_SERVER_TRANSFER_PROHIBITED,
+        self::STATUS_SERVER_UPDATE_PROHIBITED
     );
 
     private $pendingStatuses = array(
-        "pendingDelete",
-        "pendingTransfer",
-        "pendingUpdate",
-        "pendingRenew",
-        "pendingCreate"
+        self::STATUS_PENDING_CREATE,
+        self::STATUS_PENDING_DELETE,
+        self::STATUS_PENDING_RENEW,
+        self::STATUS_PENDING_TRANSFER,
+        self::STATUS_PENDING_UPDATE
     );
 
     private $actions = array(
