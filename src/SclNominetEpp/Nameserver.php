@@ -170,7 +170,7 @@ class Nameserver
      *
      * @param string $status
      */
-    public function addStatus($newStatus)
+    public function addStatus($newStatus, $remStatus = null)
     {
         if (!in_array($newStatus, $this->possibleStatus)) {
             //fail, not a legal status.
