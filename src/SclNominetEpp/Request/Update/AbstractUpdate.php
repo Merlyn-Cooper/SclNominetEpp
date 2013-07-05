@@ -134,7 +134,7 @@ abstract class AbstractUpdate extends Request
      *
      * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
      */
-    protected function add(UpdateFieldInterface $field)
+    public function add(UpdateFieldInterface $field)
     {
         $this->add[] = $field;
     }
@@ -146,7 +146,7 @@ abstract class AbstractUpdate extends Request
      *
      * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
      */
-    protected function remove(UpdateFieldInterface $field)
+    public function remove(UpdateFieldInterface $field)
     {
         $this->remove[] = $field;
     }
@@ -158,7 +158,7 @@ abstract class AbstractUpdate extends Request
      *
      * @param \SclNominetEpp\Request\Update\Field\UpdateFieldInterface $field
      */
-    protected function change(UpdateFieldInterface $field)
+    public function change(UpdateFieldInterface $field)
     {
         $this->change[] = $field;
     }

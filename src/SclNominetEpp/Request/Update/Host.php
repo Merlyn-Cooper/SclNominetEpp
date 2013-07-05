@@ -21,9 +21,6 @@ class Host extends AbstractUpdate
     protected $host = null;
     protected $value;
 
-    private $add = array();
-    private $remove = array();
-
     public function __construct(Nameserver $host)
     {
         parent::__construct(

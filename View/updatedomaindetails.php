@@ -15,7 +15,8 @@ $nominet = new Nominet();
 $nominet->setCommunicator($communicator);
 
 $nominet->login($config['username'], $config['password']);
-$domainObject = $nominet->domainInfo($_REQUEST['dname']);
+//$_REQUEST['dname']
+$domainObject = $nominet->domainInfo('caliban-scl.sch.uk');
 ?>
 
 <!DOCTYPE html>
@@ -25,37 +26,86 @@ $domainObject = $nominet->domainInfo($_REQUEST['dname']);
         <title></title>
     </head>
     <body>
-        <form action="" method="post">
-            <label>Domain Name :</label>
-            <input type="text" name="dname">
-            <label>Registrant :</label>
-            <input type="text" name="registrant">
-            <label>Client Id :</label>
-            <input type="text" name="clientId">
-            <label>Created Date :</label>
-            <input type="text" name="createdDate">
-            <label>Expired Date :</label>
-            <input type="text" name="expiredDate">
-            <label>Last Update Client Id :</label>
-            <input type="text" name="lastUpdateClientId">
-            <label>Last Update Date :</label>
-            <input type="text" name="lastUpdateDate">
-            <label>First Bill Setting :</label>
-            <input type="text" name="firstBill">
-            <label>Recur Bill Setting :</label>
-            <input type="text" name="recurBill">
-            <?php if (((empty($domainObject->recurBill))||(empty($domainObject->nextBill)))&&(!empty($domainObject->autoBill))) :?>
-            	<label>Auto Bill Setting :</label>
-            	<input type="text" name="autoBill">
+        <form action="index.php" method="post">
+            <?php if (null != $domainObject->getName()) :?>
+                <label>Domain Name :</label>
+                <input type="text" name="domainName" value="<?php echo $domainObject->getName()?>"><br />
             <?php endif; ?>
-            <?php if (((empty($domainObject->recurBill))||(empty($domainObject->autoBill)))&&(!empty($domainObject->nextBill))) :?>
+            <?php if (null != $domainObject->getRegistrant()) :?>
+                <label>Registrant :</label>
+                <input type="text" name="registrant" value="<?php echo $domainObject->getRegistrant()?>"><br />
+            <?php endif;?>
+            <?php if (null != $domainObject->getClientID()) :?>
+                <label>Client Id :</label>
+                <input type="text" name="clientId" value="<?php echo $domainObject->getClientID()?>"><br />
+            <?php endif;?>
+                
+                
+            <?php if (null != $domainObject->getCreated()) :?>
+                <label>Created Date :</label>
+                <input type="text" name="createdDate" value="<?php echo $domainObject->getCreated()->format('Y-m-d H:i:s')?>"><br />
+            <?php endif;?>
+            <?php if (null != $domainObject->getExpired()) : ?>
+                <label>Expired Date :</label>
+                <input type="text" name="expiredDate" value="<?php echo $domainObject->getExpired()->format('Y-m-d H:i:s')?>"><br />
+            <?php endif; ?>
+                
+                
+            <?php if (null != $domainObject->getClientID()) :?>
+                <label>Last Update Client Id :</label>
+                <input type="text" name="lastUpdateClientId" value="<?php echo $domainObject->getClientID()?>"><br />
+            <?php endif; ?>
+            <?php if (null != $domainObject->getUpDate()) : ?>
+                <label>Last Update Date :</label>
+                <input type="text" name="lastUpdateDate" value="<?php echo $domainObject->getUpDate()->format('Y-m-d H:i:s') ?>"><br />
+            <?php endif; ?>
+                
+            <?php if (null != $domainObject->getFirstBill()) :?>
+                <label>First Bill Setting :</label>
+                <input type="text" name="firstBill" value="<?php echo $domainObject->getFirstBill() ?>"> <br />
+            <?php endif; ?>
+            <?php if (null != $domainObject->getRecurBill()) :?>
+                <label>Recur Bill Setting :</label>
+                <input type="text" name="recurBill" value="<?php echo $domainObject->getRecurBill() ?>"><br />
+            <?php endif;?>
+                <p>"th" bill the registrar, "bc" bill the customer.</p>
+            <?php 
+                $contacts = $domainObject->getContacts();
+                if (!empty($contacts)) :
+                    foreach ($contacts as $contact) :
+            ?>
+                
+            <?
+                    endforeach;
+                endif; 
+                
+                $nameservers = $domainObject->getNameservers();
+                if (!empty($nameservers)) :
+                    foreach ($nameservers as $nameserver) :
+            ?>
+                
+            <?
+                    endforeach;
+                endif; 
+            
+                $statuses = $domainObject->getStatuses();
+                if (!empty($statuses)) :
+                    foreach ($statuses as $status) :
+            ?>
+                
+            <?
+                    endforeach;
+                endif; 
+            ?>   
+            <?php if (((null == $domainObject->getRecurBill())||(null == $domainObject->getNextBill()))&&(null != $domainObject->getAutoBill())) :?>
+            	<label>Auto Bill Setting :</label>
+            	<input type="text" name="autoBill" value="<?php echo $domainObject->getNextBill()?>"><br />
+            <?php endif; ?>
+            <?php if (((null == $domainObject->getRecurBill())||(null == $domainObject->getAutoBill()))&&(null != $domainObject->getNextBill())) :?>
             	<label>Next Bill Setting :</label>
-            	<input type="text" name="nextBill">
+                <input type="text" name="nextBill" value="<?php echo $domainObject->getAutoBill() ?>"><br />
             <?php endif; ?>
             <input type="submit" value="Submit">
         </form>
-        <?php
-        // put your code here
-        ?>
     </body>
 </html>

@@ -573,11 +573,12 @@ class Nominet extends AbstractRequestResponse
     public function domainInfo($domainName, $recursive = false)
     {
         $this->loginCheck();
-
+        $domainObject = new \SclNominetEpp\Domain();
+        $domainObject->setName($domainName);
+        
         $request = new Request\Info\Domain();
-
-        $request->lookup($domainName);
-
+        $request->setDomain($domainObject);
+        
         $response = $this->processRequest($request);
         if (!$response->success()) {
             return false;

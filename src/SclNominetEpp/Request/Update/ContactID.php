@@ -22,9 +22,6 @@ class ContactID extends AbstractUpdate
     protected $contactID = null;
     protected $newContactID;
 
-    private $add = array();
-    private $remove = array();
-
     public function __construct(ContactObject $contactID, ContactObject $newContactID)
     {
         parent::__construct(

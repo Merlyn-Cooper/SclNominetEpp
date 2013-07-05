@@ -1,7 +1,6 @@
 <?php
 namespace SclNominetEpp\Request\Update;
 
-use SclNominetEpp\Contact;
 use SclNominetEpp\Address;
 
 use SclContact\Fax;
@@ -25,13 +24,52 @@ class ContactTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->request = new UpdateContact();
+        $contact = new \SclNominetEpp\Contact();
+        $contact->setId('sc2343');
+
+            $personName = new PersonName;
+            $personName->setFirstName('first');
+            $personName->setLastName('last');
+        $contact->setName($personName);
+
+            $email = new Email();
+            $email->set('example@email.com');
+        $contact->setEmail($email);
+
+        /*
+        * The contact address.
+        * which comprises of the (Line1, city, cc, Line2, sp, pc);
+        *
+        */
+        $address = new Address();
+        $address->setLine1('Bryn Seion Chapel');
+        $address->setCity('Cardigan');
+
+            $country = new Country();
+            $country->setCode('US');
+        $address->setCountry($country);
+
+        $address->setCounty('Ceredigion');
+
+            $postCode = new Postcode();
+            $postCode->set('SA43 2HB');
+        $address->setPostCode($postCode);
+        $contact->setAddress($address);
+
+        $contact->setCompanyNumber('NI65786');
+
+            $phoneNumber = new PhoneNumber();
+            $phoneNumber->set('+44.3344555666');
+        // The registered company number or the DfES UK school number of the registrant.
+        $contact->setPhone($phoneNumber);
+        $contact->setCompany('sclMerlyn');
+        $this->request = new UpdateContact($contact);
     }
     
     /**
      *
      */
-    public function testCreateContact()
+    public function testUpdateContact()
     {
         $xml = <<<EOX
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -40,7 +78,7 @@ class ContactTest extends \PHPUnit_Framework_TestCase
     <update>
       <contact:update
        xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
-        <contact:id>sh8013</contact:id>
+        <contact:id>sc2343</contact:id>
         <contact:add>
           <contact:status s="ok"/>
         </contact:add>
@@ -51,5 +89,15 @@ class ContactTest extends \PHPUnit_Framework_TestCase
 </epp>
                
 EOX;
+        $expected = new \SclNominetEpp\Contact;
+
+        $expected->setId('sc2343');
+        $expected->addStatus('ok');
+
+        $this->response->init($xml);
+
+        $contact = $this->response->getContact();
+
+        $this->assertEquals($expected, $contact);
     }
 }

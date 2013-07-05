@@ -3,6 +3,7 @@
 namespace SclNominetEpp\Request\Info;
 
 use SclNominetEpp\Response\Info\Domain as DomainInfoResponse;
+use SclNominetEpp\Domain as DomainObject;
 
 /**
  * This class build the XML for a Nominet EPP domain:info command.
@@ -39,7 +40,7 @@ class Domain extends AbstractInfo
     {
         $info = $xml->addChild("{$this->type}:info", '', $this->infoNamespace);
 
-        $name = $info->addChild($this->valueName, $this->value, $this->infoNamespace);
+        $name = $info->addChild($this->valueName, $this->getName(), $this->infoNamespace);
         $name->addAttribute('hosts', 'all');
     }
 

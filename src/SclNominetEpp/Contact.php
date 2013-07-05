@@ -258,7 +258,7 @@ class Contact extends \SclContact\Contact
         return $this->tradeName;
     }
 
-    public function addStatus($status)
+    public function addStatus($newStatus)
     {
         if (!in_array($newStatus, $possibleStatus)) {
             //fail, not a legal status.

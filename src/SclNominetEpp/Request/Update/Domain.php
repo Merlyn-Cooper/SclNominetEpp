@@ -31,20 +31,6 @@ class Domain extends AbstractUpdate
     protected $value;
 
     /**
-     * An array of elements that will be added during the update command.
-     *
-     * @var array
-     */
-    private $add = array();
-
-    /**
-     * An array of elements that will be removed during the update command.
-     *
-     * @var array
-     */
-    private $remove = array();
-
-    /**
      * Constructor
      *
      * @param string $value

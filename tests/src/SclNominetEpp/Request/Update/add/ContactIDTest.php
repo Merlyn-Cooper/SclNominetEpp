@@ -1,5 +1,5 @@
 <?php
-namespace SclNominetEpp\Request\Update;
+namespace SclNominetEpp\Request\Update\Add;
 
 use SclNominetEpp\Contact;
 use SclNominetEpp\Address;
@@ -10,7 +10,7 @@ use SclContact\Postcode;
 use SclContact\PhoneNumber;
 use SclContact\PersonName;
 use SclContact\Email;
-use SclNominetEpp\Request\Update\ContactID as UpdateContactID;
+use SclNominetEpp\Request\Update\Add\ContactID as UpdateContactID;
 
 class ContactIDTest extends \PHPUnit_Framework_TestCase
 {
