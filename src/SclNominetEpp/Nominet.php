@@ -110,22 +110,22 @@ class Nominet extends AbstractRequestResponse
 	);
 
     private $nameserverStatus = array(
-		"OK" => "ok",
-		"LINKED" => "linked",
-		"DELETE" => array(
-			"PROHIBITED" => array(
-				"SERVER" => "serverDeleteProhibited",
-				"CLIENT" => "clientDeleteProhibited",
+        "OK" => "ok",
+        "LINKED" => "linked",
+        "DELETE" => array(
+            "PROHIBITED" => array(
+                "SERVER" => "serverDeleteProhibited",
+                "CLIENT" => "clientDeleteProhibited",
 			),
-			"PENDING" => "pendingDelete"
+            "PENDING" => "pendingDelete"
 		),
-		"TRANSFER" => array(
-			"PENDING" => "pendingTransfer"
-		),
-		"UPDATE" => array(
-			"PROHIBITED" => array(
-				"SERVER" => "serverUpdateProhibited",
-				"CLIENT" => "clientUpdateProhibited",
+        "TRANSFER" => array(
+            "PENDING" => "pendingTransfer"
+        ),
+        "UPDATE" => array(
+            "PROHIBITED" => array(
+                "SERVER" => "serverUpdateProhibited",
+                "CLIENT" => "clientUpdateProhibited",
 			)
 		),
 	);
@@ -471,11 +471,6 @@ class Nominet extends AbstractRequestResponse
          * REMOVE
          */
 
-        if (!empty($removeStatuses)) {
-            foreach ($removeStatuses as $status ) {
-                $request->remove(new Update\Field\Status(self::STATUS_CLIENT_UPDATE_PROHIBITED));
-            }
-        }
         if (!empty($removeNameservers)) {
             foreach ($removeNameservers as $nameserver) {
                 $request->remove(new Update\Field\DomainNameserver($nameserver->getHostName()));
@@ -485,6 +480,12 @@ class Nominet extends AbstractRequestResponse
         if (!empty($removeContacts)) {
             foreach ($removeContacts as $type => $contact) {
                 $request->remove(new Update\Field\DomainContact($contact->getId(), $type));
+            }
+        }
+        
+        if (!empty($removeStatuses)) {
+            foreach ($removeStatuses as $status) {
+                $request->remove(new Update\Field\Status($status));
             }
         }
 

@@ -48,15 +48,15 @@ class Domain
     const STATUS_OKAY = 'ok';
 
     private $domainStatus = array(
-		"OK" => "ok",
-		"HOLD" => array(
-			"SERVER" => "serverHold",
-			"CLIENT" => "clientHold"
+        "OK" => "ok",
+        "HOLD" => array(
+            "SERVER" => "serverHold",
+            "CLIENT" => "clientHold"
 		),
-		"DELETE" => array(
-			"PROHIBITED" => array(
-				"SERVER" => "serverDeleteProhibited",
-				"CLIENT" => "clientDeleteProhibited",
+        "DELETE" => array(
+            "PROHIBITED" => array(
+                "SERVER" => "serverDeleteProhibited",
+                "CLIENT" => "clientDeleteProhibited",
 			),
 			"PENDING" => "pendingDelete"
 		),

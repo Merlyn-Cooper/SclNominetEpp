@@ -24,7 +24,7 @@ class Nameserver
      * @var array|string
      */
     private $status = array();
-    
+
     private $possibleStatus = array(
         "ok",
         "linked",
@@ -35,7 +35,7 @@ class Nameserver
         "serverUpdateProhibited",
         "clientUpdateProhibited"
     );
-    
+
     /**
      * The identifier of the sponsoring client.
      *
@@ -135,14 +135,14 @@ class Nameserver
          * "pendingDelete" status MUST NOT be combined with either
          * "clientDeleteProhibited" or "serverDeleteProhibited" status.
          */
-        if (("clientDeleteProhibited" == $newStatus || "serverDeleteProhibited == $newStatus") 
+        if (("clientDeleteProhibited" == $newStatus || "serverDeleteProhibited == $newStatus")
                 && (in_array('pendingDelete', $this->status))) {
             //fail
             return false;
         }
 
-        if (("pendingDelete" == $newStatus) 
-                && ((in_array('clientDeleteProhibited', $this->status)) 
+        if (("pendingDelete" == $newStatus)
+                && ((in_array('clientDeleteProhibited', $this->status))
                 || (in_array('serverDeleteProhibited', $this->status)))) {
             //fail
             return false;
@@ -151,38 +151,38 @@ class Nameserver
         /**
          * "pendingTransfer" status MUST NOT be combined with either
          * "clientTransferProhibited" or "serverTransferProhibited" status.
-         */	
-        if (("clientTransferProhibited" == $newStatus || "serverTransferProhibited == $newStatus") 
+         */
+        if (("clientTransferProhibited" == $newStatus || "serverTransferProhibited == $newStatus")
                 && (in_array('pendingTransfer', $this->status))) {
             //fail
             return false;
         }
 
-        if (("pendingTransfer" == $newStatus) 
-                && ((in_array('clientTransferProhibited', $this->status)) 
+        if (("pendingTransfer" == $newStatus)
+                && ((in_array('clientTransferProhibited', $this->status))
                 || (in_array('serverTransferProhibited', $this->status)))) {
             //fail
             return false;
         }
 
-        /* 
+        /*
          * "pendingUpdate" status MUST NOT be combined with either
          * "clientUpdateProhibited" or "serverUpdateProhibited" status.
          */
-        if (("clientUpdateProhibited" == $newStatus || "serverUpdateProhibited == $newStatus") 
+        if (("clientUpdateProhibited" == $newStatus || "serverUpdateProhibited == $newStatus")
                 && (in_array('pendingUpdate', $currentStatuses))) {
             //fail
             return false;
         }
 
-        if (("pendingUpdate" == $newStatus) 
-                && ((in_array('clientUpdateProhibited', $currentStatuses)) 
+        if (("pendingUpdate" == $newStatus)
+                && ((in_array('clientUpdateProhibited', $currentStatuses))
                 || (in_array('serverUpdateProhibited', $currentStatuses)))) {
             //fail
             return false;
         }
         /**
-         * The pendingCreate, pendingDelete, pendingTransfer, and pendingUpdate 
+         * The pendingCreate, pendingDelete, pendingTransfer, and pendingUpdate
          * status values MUST NOT be combined with each other.
          * Other status combinations not expressly prohibited MAY be used.
          */
@@ -192,11 +192,11 @@ class Nameserver
                 if (in_array($status, $this->pendingStatuses)) {
                     //fail,
                     return false;
-                }    
+                }
             }
         }
         $this->status[] = (string) $status;
-        
+
         return true;
     }
 
