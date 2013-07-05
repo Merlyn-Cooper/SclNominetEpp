@@ -12,6 +12,45 @@ use DateTime;
 class Nameserver
 {
     /**
+     * @todo STATUS may be divided into Domain and Name Server, important!
+     * "draft-hollenbeck-rfc2832bis-01.html" check out 2.1.1 and 2.1.2.
+     * http://archive.icann.org/
+     *
+     * A client MUST NOT alter status values set by the server.
+     * A server MAY alter or override status values set by a client, subject to local server policies.
+     * Status values that can be added or removed by a client are prefixed with "client".
+     */
+    const STATUS_CLIENT_DELETE_PROHIBITED   = 'clientDeleteProhibited';
+    const STATUS_CLIENT_HOLD                = 'clientHold';
+    const STATUS_CLIENT_RENEW_PROHIBITED    = 'clientRenewProhibited';
+    const STATUS_CLIENT_TRANSFER_PROHIBITED = 'clientTransferProhibited';
+    const STATUS_CLIENT_UPDATE_PROHIBITED   = 'clientUpdateProhibited';
+
+    // Corresponding status values that can be added or removed by a server are prefixed with "server".
+    const STATUS_SERVER_DELETE_PROHIBITED   = 'serverDeleteProhibited';
+    const STATUS_SERVER_HOLD                = 'serverHold';
+    const STATUS_SERVER_RENEW_PROHIBITED    = 'serverRenewProhibited';
+    const STATUS_SERVER_TRANSFER_PROHIBITED = 'serverTransferProhibited';
+    const STATUS_SERVER_UPDATE_PROHIBITED   = 'serverUpdateProhibited';
+
+    /*
+     * pending[action]" status MUST NOT be combined
+     * with either:-
+     * "client[action]Prohibited" or
+     * "server[action]Prohibited" status or
+     * other "pending[action]" status.
+     */
+    const STATUS_PENDING_CREATE   = 'pendingCreate';
+    const STATUS_PENDING_DELETE   = 'pendingDelete';
+    const STATUS_PENDING_RENEW    = 'pendingRenew';
+    const STATUS_PENDING_TRANSFER = 'pendingTransfer';
+    const STATUS_PENDING_UPDATE   = 'pendingUpdate';
+
+    const STATUS_INACTIVE = 'inactive';
+
+    //"ok" status MUST NOT be combined with any other status.
+    const STATUS_OKAY = 'ok';
+    /**
      * The nameserver host name
      *
      * @var string

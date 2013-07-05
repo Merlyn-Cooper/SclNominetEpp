@@ -46,49 +46,7 @@ class Domain
 
     //"ok" status MUST NOT be combined with any other status.
     const STATUS_OKAY = 'ok';
-
-    /*private $domainStatus = array(
-        "OK" => "ok",
-        "HOLD" => array(
-            "SERVER" => "serverHold",
-            "CLIENT" => "clientHold"
-		),
-        "DELETE" => array(
-            "PROHIBITED" => array(
-                "SERVER" => "serverDeleteProhibited",
-                "CLIENT" => "clientDeleteProhibited",
-			),
-			"PENDING" => "pendingDelete"
-		),
-		"TRANSFER" => array(
-			"PROHIBITED" => array(
-				"SERVER" => "serverTransferProhibited",
-				"CLIENT" => "clientTransferProhibited",
-			),
-			"PENDING" => "pendingTransfer"
-		),
-		"UPDATE" => array(
-			"PROHIBITED" => array(
-				"SERVER" => "serverUpdateProhibited",
-				"CLIENT" => "clientUpdateProhibited",
-			),
-			"PENDING" => "pendingUpdate"
-		),
-		"RENEW" => array(
-			"PROHIBITED" => array(
-				"SERVER" => "serverRenewProhibited",
-				"CLIENT" => "clientRenewProhibited",
-			),
-			"PENDING" => "pendingRenew"
-		),
-		"CREATE" => array(
-			"PROHIBITED" => array(
-				"SERVER" => "serverCreateProhibited",
-				"CLIENT" => "clientCreateProhibited",
-			),
-			"PENDING" => "pendingCreate"
-		),
-	);*/
+    
     /**
      * Domain name
      *
