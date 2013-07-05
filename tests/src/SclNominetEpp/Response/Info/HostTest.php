@@ -47,7 +47,6 @@ class HostTest extends \PHPUnit_Framework_TestCase
         <host:name>ns1.caliban-scl.sch.uk.</host:name>
         <host:roid>739787E8A10BF2CA11882CE974FD775E-UK</host:roid>
         <host:status s="ok"/>
-        <host:status s="pendingTransfer"/>
         <host:addr ip="v4">1.2.3.4</host:addr>
         <host:clID>UNKNOWN</host:clID>
         <host:crID>NOMINET</host:crID>
