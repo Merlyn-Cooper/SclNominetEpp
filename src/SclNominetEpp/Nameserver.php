@@ -187,7 +187,7 @@ class Nameserver
          * Other status combinations not expressly prohibited MAY be used.
          */
 
-        if (in_array($newStatus,$this->pendingStatuses)) {
+        if (in_array($newStatus, $this->pendingStatuses)) {
             foreach ($currentStatuses as $status) {
                 if (in_array($status, $this->pendingStatuses)) {
                     //fail,

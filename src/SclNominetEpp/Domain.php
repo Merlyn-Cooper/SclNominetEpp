@@ -47,7 +47,7 @@ class Domain
     //"ok" status MUST NOT be combined with any other status.
     const STATUS_OKAY = 'ok';
 
-    private $domainStatus = array(
+    /*private $domainStatus = array(
         "OK" => "ok",
         "HOLD" => array(
             "SERVER" => "serverHold",
@@ -88,7 +88,7 @@ class Domain
 			),
 			"PENDING" => "pendingCreate"
 		),
-	);
+	);*/
     /**
      * Domain name
      *

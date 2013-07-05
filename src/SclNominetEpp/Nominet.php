@@ -66,7 +66,7 @@ class Nominet extends AbstractRequestResponse
     //"ok" status MUST NOT be combined with any other status.
     const STATUS_OKAY = 'ok';
 
-    private $domainStatus = array(
+    /*private $domainStatus = array(
 		"OK" => "ok",
 		"HOLD" => array(
 			"SERVER" => "serverHold",
@@ -107,9 +107,9 @@ class Nominet extends AbstractRequestResponse
 			),
 			"PENDING" => "pendingCreate"
 		),
-	);
+	);*/
 
-    private $nameserverStatus = array(
+    /*private $nameserverStatus = array(
         "OK" => "ok",
         "LINKED" => "linked",
         "DELETE" => array(
@@ -128,7 +128,8 @@ class Nominet extends AbstractRequestResponse
                 "CLIENT" => "clientUpdateProhibited",
 			)
 		),
-	);
+	);*/
+    
     /**
      * Flag that states whether we are logged into Nominet or not.
      *
