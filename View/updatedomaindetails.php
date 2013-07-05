@@ -72,28 +72,34 @@ $domainObject = $nominet->domainInfo('caliban-scl.sch.uk');
             <?php 
                 $contacts = $domainObject->getContacts();
                 if (!empty($contacts)) :
+                    ?><label>Contacts</label><br /><?php
                     foreach ($contacts as $contact) :
-            ?>
-                
-            <?
+                    ?>
+                        <label>Contact Id </label> 
+                        <input type="text" value="<?php echo $contact->getId();?>"><br />
+                        <label>Contact Type</label>
+                        <input type="text" value="<?php echo $contact->getType();?>"><br />
+                    <?
                     endforeach;
                 endif; 
                 
                 $nameservers = $domainObject->getNameservers();
                 if (!empty($nameservers)) :
+                    ?><br /><label>Nameservers</label><br /><?php
                     foreach ($nameservers as $nameserver) :
-            ?>
-                
-            <?
+                    ?>
+                        <label>Nameserver name</label>
+                        <input type="text" value="<?php echo $nameserver->getHostName();?>"><br />
+                    <?
                     endforeach;
                 endif; 
             
                 $statuses = $domainObject->getStatuses();
                 if (!empty($statuses)) :
                     foreach ($statuses as $status) :
-            ?>
-                
-            <?
+                    ?>
+                        
+                    <?
                     endforeach;
                 endif; 
             ?>   
