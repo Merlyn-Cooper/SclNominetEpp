@@ -177,10 +177,16 @@ class Nameserver
             return false;
         }
 
-        if ('linked' != $newStatus && in_array('ok', $this->status)) {
-            //fail, "ok" status MAY only be combined with "linked" status.
+        if ((!empty($this->status) && 'ok' == $newStatus)
+                || ('linked' != $newStatus && in_array('ok', $this->status))) {
+            ////fail, "ok" status MAY only be combined with "linked" status.
             return false;
         }
+        
+        /*if ('linked' != $newStatus && in_array('ok', $this->status)) {
+            //fail, "ok" status MAY only be combined with "linked" status.
+            return false;
+        }*/
 
         foreach ($this->actions as $action) {
             /**
