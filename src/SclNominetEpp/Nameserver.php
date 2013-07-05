@@ -65,7 +65,7 @@ class Nameserver
      */
 
     private $possibleStatus = array(
-        self::STATUS_CLIENT_DELETE_PROHIBITED, 
+        self::STATUS_CLIENT_DELETE_PROHIBITED,
         self::STATUS_CLIENT_UPDATE_PROHIBITED,
         self::STATUS_LINKED,
         self::STATUS_OKAY,
@@ -187,18 +187,18 @@ class Nameserver
              * "pending{$action}" status MUST NOT be combined with either
              * "client{$action}Prohibited" or "server{$action}Prohibited" status.
              */
-           if (("client{$action}Prohibited" == $newStatus || "server{$action}Prohibited == $newStatus")
-                   && (in_array("pending{$action}", $this->status))) {
-               //fail
-               return false;
-           }
+            if (("client{$action}Prohibited" == $newStatus || "server{$action}Prohibited == $newStatus")
+                    && (in_array("pending{$action}", $this->status))) {
+                //fail
+                return false;
+            }
 
-           if (("pending{$action}" == $newStatus)
-                   && ((in_array("client{$action}Prohibited", $this->status))
-                   || (in_array("server{$action}Prohibited", $this->status)))) {
-               //fail
-               return false;
-           }
+            if (("pending{$action}" == $newStatus)
+                    && ((in_array("client{$action}Prohibited", $this->status))
+                    || (in_array("server{$action}Prohibited", $this->status)))) {
+                //fail
+                return false;
+            }
         }
         
         /**
